@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".activities.LoginActivity">
+
+    <ImageView
+        android:id="@+id/imagen_logo"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_logo1" />
+
+    <EditText
+        android:id="@+id/email_usuario"
+        android:layout_width="300dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:hint="@string/txt_correo"/>
+
+    <EditText
+        android:id="@+id/password_usuario"
+        android:layout_width="300dp"
+        android:layout_marginBottom="50dp"
+        android:layout_gravity="center"
+        android:layout_height="70dp"
+        android:hint="@string/txt_contrasena"/>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:text="@string/txt_iniciar_sesion"
+        />
+    <Button
+        android:id="@+id/btn_registro"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:text="@string/txt_registrarse"
+        />
+
+
+</LinearLayout>
