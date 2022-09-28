@@ -14,10 +14,35 @@
         android:theme="@style/Theme.BusiMap"
         tools:targetApi="31">
         <activity
+            android:name=".DetalleLugarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivityModerador"
+            android:exported="false" />
+        <activity
+            android:name=".CrearLugar"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ItemLugar"
+            android:exported="false" />
+        <activity
+            android:name=".activities.VistaCrearNegocio"
+            android:exported="false" />
+        <activity
+            android:name=".activities.VistaNegocios"
+            android:exported="false" />
+        <activity
+            android:name=".activities.NavHeader"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

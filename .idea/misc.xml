@@ -4,9 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/borde_redondo.xml" value="0.131" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/fondo_forms.xml" value="0.154" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/ic_search.xml" value="0.154" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_crear_lugar.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_detalle_lugar.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_home.xml" value="0.22" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_item_lugar.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_login.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_nav_header.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_registro.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_vista_crear_negocio.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_vista_negocios.xml" value="0.21041666666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/menu/menu.xml" value="0.2234375" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.154" />
       </map>
     </option>
   </component>

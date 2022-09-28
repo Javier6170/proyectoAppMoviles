@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navConfiguraciones"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Configuraciones" />
+    </group>
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navNotificaciones"
+            android:icon="@drawable/ic_baseline_notifications_24"
+            android:title="Notificaciones" />
+
+        <item
+            android:id="@+id/navAyuda"
+            android:icon="@drawable/ic_baseline_help_24"
+            android:title="Ayuda" />
+    </group>
+
+
+</menu>

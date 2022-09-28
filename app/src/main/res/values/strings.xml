@@ -3,5 +3,30 @@
     <string name="txt_correo">Correo</string>
     <string name="txt_iniciar_sesion">Iniciar Sesión</string>
     <string name="txt_contrasena">Contraseña</string>
+    <string name="txt_contrasenaRepeat">Repetir Contraseña</string>
     <string name="txt_registrarse">Registrarse</string>
+    <string name="txt_nombre">Nombre</string>
+    <string name="txt_nickname">Nickname</string>
+    <string name="txt_busqueda">Buscar lugar</string>
+    <string name="txt_restaurantes">restaurantes</string>
+    <string name="txt_hoteles">hoteles</string>
+    <string name="txt_almacen">almacen</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+
+    <!-- Textos de crear lugar -->
+    <string name="txt_nombre_lugar">Nombre del negocio</string>
+    <string name="txt_descripcion_lugar">Descripción del negocio</string>
+    <string name="txt_telefono_lugar">Teléfono del negocio</string>
+    <string name="btn_crear_lugar">Crear nuevo negocio</string>
+    <string name="btn_nuevo_lugar">Nuevo negocio</string>
+    <string name="btn_direccion_lugar">Dirección del negocio</string>
+
+
+    <!-- Textos de validaciones -->
+    <string name="es_obligatorio">Este campo es obligatorio</string>
+    <string name="maximo_caracteres">Máximo 10 caracteres</string>
+    <string name="datos_correctos">Los datos son correctos</string>
+    <string name="datos_incorrectos">Los datos son incorrectos</string>
 </resources>
