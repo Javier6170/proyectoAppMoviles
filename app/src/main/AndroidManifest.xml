@@ -14,22 +14,27 @@
         android:theme="@style/Theme.BusiMap"
         tools:targetApi="31">
         <activity
-            android:name=".DetalleLugarActivity"
+            android:name=".AdministradorActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.AIzaSyBUmEF-X-C6LNqKWKxxbGfuXC3ppXIFVdg"
+            android:value="AIzaSyBUmEF-X-C6LNqKWKxxbGfuXC3ppXIFVdg" />
+
+        <activity
+            android:name=".activities.ResultadoBusqueda"
             android:exported="false" />
         <activity
-            android:name=".HomeActivityModerador"
+            android:name=".activities.DetalleLugarActivity"
             android:exported="false" />
         <activity
-            android:name=".CrearLugar"
+            android:name=".activities.HomeActivityModerador"
             android:exported="false" />
         <activity
             android:name=".activities.ItemLugar"
             android:exported="false" />
         <activity
             android:name=".activities.VistaCrearNegocio"
-            android:exported="false" />
-        <activity
-            android:name=".activities.VistaNegocios"
             android:exported="false" />
         <activity
             android:name=".activities.NavHeader"

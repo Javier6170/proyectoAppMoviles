@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragmentos.InicioFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/texto_busqueda"
+            android:layout_width="386dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/fondo_forms"
+            android:drawableStart="@drawable/ic_baseline_location_on_24"
+            android:drawableEnd="@drawable/ic_search"
+            android:elevation="10dp"
+            android:hint="@string/txt_busqueda"
+            android:imeOptions="actionSearch"
+            android:paddingStart="23dp"
+            android:paddingEnd="15dp"
+            android:singleLine="true" />
+    </LinearLayout>
+
+
+
+
+    <HorizontalScrollView
+        android:id="@+id/scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <Button
+                android:layout_width="190dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_restaurant_24"
+                android:elevation="20dp"
+                android:text="@string/txt_restaurantes"
+                android:textColor="@color/black"></Button>
+
+            <Button
+                android:layout_width="190dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+
+                android:backgroundTint="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_hotel_24"
+                android:elevation="20dp"
+                android:text="@string/txt_hoteles"
+                android:textColor="@color/black" />
+
+            <Button
+                android:layout_width="190dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+
+                android:backgroundTint="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_home_work_24"
+                android:elevation="20dp"
+                android:text="@string/txt_almacen"
+                android:textColor="@color/black"></Button>
+
+            <Button
+                android:layout_width="190dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+
+                android:backgroundTint="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_local_cafe_24"
+                android:elevation="20dp"
+                android:text="@string/txt_cafes"
+                android:textColor="@color/black"></Button>
+
+            <Button
+                android:layout_width="190dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+
+                android:backgroundTint="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_local_bar_24"
+                android:elevation="20dp"
+                android:text="@string/txt_bares"
+                android:textColor="@color/black"></Button>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</FrameLayout>

@@ -3,9 +3,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navConfiguraciones"
-            android:icon="@drawable/ic_baseline_settings_24"
-            android:title="Configuraciones" />
+            android:id="@+id/navHome"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="@string/txt_home" />
+        <item
+            android:id="@+id/navMisNegocios"
+            android:icon="@drawable/ic_baseline_add_business_24"
+            android:title="@string/txt_mis_negocios" />
+        <item
+            android:id="@+id/navFavoritos"
+            android:icon="@drawable/ic_baseline_favorite_24"
+            android:title="@string/txt_favoritos" />
     </group>
     <group
         android:id="@+id/group1"
@@ -13,13 +21,15 @@
         <item
             android:id="@+id/navNotificaciones"
             android:icon="@drawable/ic_baseline_notifications_24"
-            android:title="Notificaciones" />
-
+            android:title="@string/txt_notificaciones" />
+        <item
+            android:id="@+id/navConfiguracion"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/txt_configuraciones" />
         <item
             android:id="@+id/navAyuda"
             android:icon="@drawable/ic_baseline_help_24"
-            android:title="Ayuda" />
+            android:title="@string/txt_ayuda" />
     </group>
-
 
 </menu>

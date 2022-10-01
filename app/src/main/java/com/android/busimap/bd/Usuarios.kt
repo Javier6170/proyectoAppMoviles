@@ -4,38 +4,28 @@ import com.android.busimap.modelo.Usuario
 
 object Usuarios {
 
-    private val usuarios: ArrayList<Usuario> = ArrayList()
+    private val lista: ArrayList<Usuario> = ArrayList()
 
     init {
-        usuarios.add(
-            Usuario(
-                1,
-                "Javier Rodriguez Marulanda",
-                "Javiprl",
-                "rodriguez.javier.6170@eam.edu.co",
-                "12345"
-            )
-        )
-        usuarios.add(Usuario(1, "Santiago Beltran Florez", "santi", "santi@eam.edu.co", "12345678"))
-        usuarios.add(Usuario(1, "carlos", "carlos", "carlos@email.com", "123"))
+        lista.add( Usuario(1, "Carlos", "carlos", "carlos@email.com", "1203") )
+        lista.add( Usuario(2, "Pepito", "pepe", "pepe@email.com", "3451") )
+        lista.add( Usuario(3, "Laura", "laura", "laura@email.com", "6543") )
+        lista.add( Usuario(4, "Marcos", "marcos", "marcos@email.com", "8635") )
+        lista.add( Usuario(5, "Maria", "maria", "maria@email.com", "5437") )
     }
 
     fun listar():ArrayList<Usuario>{
-        return usuarios
+        return lista
     }
 
     fun agregar(usuario: Usuario){
-        usuarios.add(usuario)
+        lista.add(usuario)
     }
 
     fun obtener(id:Int): Usuario?{
-        return usuarios.firstOrNull { u -> u.id == id }
+        return lista.firstOrNull { u -> u.id == id }
     }
 
-    fun login(correo: String, password: String): Usuario{
-        val user = usuarios.first { it -> it.contrasena == password && it.correo == correo }
-        return user
-    }
 
     /*
 

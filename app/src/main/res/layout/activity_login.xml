@@ -45,7 +45,8 @@
             android:layout_gravity="center"
             android:layout_height="match_parent"
             android:background="@drawable/fondo_forms"
-            android:hint="@string/txt_contrasena"/>
+            android:hint="@string/txt_contrasena"
+            android:inputType="textPassword"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
