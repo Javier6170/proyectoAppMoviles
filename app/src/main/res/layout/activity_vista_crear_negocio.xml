@@ -105,6 +105,8 @@
             android:id="@+id/btn_crear_lugar"
             android:layout_width="210dp"
             android:layout_height="60dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:text="@string/btn_crear_lugar" />
 
     </LinearLayout>

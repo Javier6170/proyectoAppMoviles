@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import com.android.busimap.R
 import com.android.busimap.bd.Categorias
 import com.android.busimap.bd.Ciudades
@@ -109,7 +110,12 @@ class VistaCrearNegocio : AppCompatActivity() {
             nuevoLugar.telefonos = telefonos
 
             Lugares.crear(nuevoLugar)
-
+            Toast.makeText(this, getString(R.string.datos_correctos), Toast.LENGTH_LONG)
+                .show()
+            binding.nombreLugar.text = null
+            binding.descripcionLugar.text = null
+            binding.telefonoLugar.text = null
+            binding.direccionLugar.text = null
         }
 
     }

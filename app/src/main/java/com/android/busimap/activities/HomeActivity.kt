@@ -42,6 +42,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         reemplazarFragmento(1, MENU_INICIO)
         binding.btnMenu.setOnClickListener { abrirMenu() }
         binding.btnCrearNegocio.setOnClickListener { abrirCrearNegocio() }
+        binding.btnLogout.setOnClickListener { cerrarSesion() }
+        binding.btnMisNegocios.setOnClickListener { reemplazarFragmento(2, MENU_MIS_LUGARES) }
 
     }
 
@@ -62,7 +64,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .replace(binding.contenidoPrincipal.id, fragmento)
             .addToBackStack(nombre)
             .commit()
-
     }
 
     override fun onBackPressed() {
@@ -89,6 +90,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sh.clear()
         sh.commit()
         finish()
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
 
@@ -117,7 +119,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.navFavoritos -> reemplazarFragmento(3, MENU_FAVORITOS)
             R.id.navNotificaciones -> reemplazarFragmento(4, MENU_NOTIFICACIONES)
             R.id.navConfiguracion -> reemplazarFragmento(5, MENU_CONFIGURACIONES)
-            R.id.navAyuda -> reemplazarFragmento(5, MENU_AYUDA)
+            R.id.navAyuda -> reemplazarFragmento(6, MENU_AYUDA)
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
