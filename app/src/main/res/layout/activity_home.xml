@@ -9,6 +9,13 @@
     tools:openDrawer="end">
 
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/mapa_creado"
+        android:layout_height="match_parent"
+        android:background="#a6eca8"
+
+        />
 
     <FrameLayout
         android:id="@+id/contenido_principal"
@@ -93,4 +100,6 @@
                 />
         </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

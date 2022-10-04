@@ -14,21 +14,30 @@ import com.android.busimap.bd.Categorias
 import com.android.busimap.databinding.ActivityHomeBinding
 import com.android.busimap.fragmentos.*
 import com.android.busimap.modelo.Lugar
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 
-class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    OnMapReadyCallback {
 
     private var MENU_INICIO = "inicio"
     private var MENU_MIS_LUGARES = "mis_lugares"
     private var MENU_FAVORITOS = "favoritos"
     private var MENU_NOTIFICACIONES = "notifiaciones"
     private var MENU_CONFIGURACIONES = "configuraciones"
+    private var MAPA = "mapa"
     private var MENU_AYUDA = "ayuda"
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var mMap: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        lateinit var listaCategorias:ArrayList<Categorias>
+        lateinit var listaCategorias: ArrayList<Categorias>
 
         super.onCreate(savedInstanceState)
 
@@ -45,6 +54,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.btnLogout.setOnClickListener { cerrarSesion() }
         binding.btnMisNegocios.setOnClickListener { reemplazarFragmento(2, MENU_MIS_LUGARES) }
 
+
+
+        supportFragmentManager.beginTransaction()
+            .replace(binding.mapaCreado.id, MapaFragment())
+            .addToBackStack(MAPA)
+            .commit()
     }
 
 
@@ -70,7 +85,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onBackPressed()
         val count = supportFragmentManager.backStackEntryCount
 
-        if(count > 0) {
+        if (count > 0) {
             val nombre = supportFragmentManager.getBackStackEntryAt(count - 1).name
             when (nombre) {
                 MENU_INICIO -> binding.navigationView.menu.getItem(0).isChecked = true
@@ -85,14 +100,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
-    fun cerrarSesion(){
+    fun cerrarSesion() {
         val sh = getSharedPreferences("sesion", Context.MODE_PRIVATE).edit()
         sh.clear()
         sh.commit()
         finish()
         startActivity(Intent(this, LoginActivity::class.java))
     }
-
 
 
     fun abrirCrearNegocio() {
@@ -125,5 +139,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
 
+        // Add a marker in Sydney and move the camera
+        val sydney = LatLng(-34.0, 151.0)
+        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
 }

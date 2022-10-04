@@ -14,12 +14,13 @@
         android:theme="@style/Theme.BusiMap"
         tools:targetApi="31">
         <activity
-            android:name=".AdministradorActivity"
+            android:name=".activities.AdministradorActivity"
             android:exported="false" />
 
         <meta-data
-            android:name="com.google.android.geo.AIzaSyBUmEF-X-C6LNqKWKxxbGfuXC3ppXIFVdg"
-            android:value="AIzaSyBUmEF-X-C6LNqKWKxxbGfuXC3ppXIFVdg" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/value_map" />
+
 
         <activity
             android:name=".activities.ResultadoBusqueda"
