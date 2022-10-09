@@ -32,5 +32,5 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_marginStart="10dp"
-            android:text="@string/txt_nickNameUser"></TextView>
+            ></TextView>
 </LinearLayout>

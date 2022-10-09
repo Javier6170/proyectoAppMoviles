@@ -2,6 +2,7 @@ package com.android.busimap.activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,7 +15,7 @@ import com.android.busimap.R
 import com.android.busimap.bd.Categorias
 import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.ActivityHomeBinding
-import com.android.busimap.databinding.ActivityNavHeaderBinding
+
 import com.android.busimap.fragmentos.*
 import com.android.busimap.modelo.Lugar
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -37,29 +38,35 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var MENU_AYUDA = "ayuda"
     private lateinit var binding: ActivityHomeBinding
     private lateinit var mMap: GoogleMap
+    private lateinit var sh:SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
-
         super.onCreate(savedInstanceState)
-
-
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        reemplazarFragmento(1, MENU_INICIO)
         binding.btnMenu.setOnClickListener { abrirMenu() }
         binding.btnCrearNegocio.setOnClickListener { abrirCrearNegocio() }
         binding.btnLogout.setOnClickListener { cerrarSesion() }
         binding.btnMisNegocios.setOnClickListener { reemplazarFragmento(2, MENU_MIS_LUGARES) }
 
 
+        sh = getSharedPreferences("sesion", Context.MODE_PRIVATE)
 
+        val codigoUsuario = sh.getInt("codigo_usuario", 0)
+
+        if( codigoUsuario != 0 ){
+            val usuario = Usuarios.obtener(codigoUsuario)
+            val encabezado = binding.navigationView.getHeaderView(0)
+
+            encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = usuario!!.nombre
+            encabezado.findViewById<TextView>(R.id.txt_nickUser).text = usuario!!.correo
+        }
+
+        reemplazarFragmento(1, MENU_INICIO)
+        binding.navigationView.setNavigationItemSelectedListener(this)
 
         supportFragmentManager.beginTransaction()
             .replace(binding.mapaCreado.id, MapaFragment())

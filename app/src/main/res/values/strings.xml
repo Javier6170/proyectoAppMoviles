@@ -48,7 +48,28 @@
     <string name="value_map">AIzaSyBR_0katflK0bUCPbtoCHXvWF8ja1dmxVE</string>
     <string name="title_activity_maps">MapsActivity</string>
 
+    <!-- Textos detalle lugar -->
+    <string name="info_lugar">Información del lugar</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="escribir_comentario">Escribir comentario</string>
+    <string name="comentar">Comentar</string>
+    <string name="sin_comentarios">Aún no hay comentarios</string>
+    <string name="comentario_realizado">Se ha enviado el comentario</string>
+    <string name="comentario_error">Debe escribir el comentario y seleccionar las estrellas</string>
+    <string name="abierto">Abierto</string>
+    <string name="cerrado">Cerrado</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="logout">cerrar sesion</string>
+    <!-- Textos moderador -->
+    <string name="deshacer">Deshacer</string>
+    <string name="lugar_aceptado">¡Lugar aceptado!</string>
+    <string name="lugar_rechazado">¡Lugar rechazado!</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="rechazar">Rechazar</string>
+    <string name="lugares_rechazados">lugares rechazados</string>
+    <string name="perfil">Perfil</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="mas_opciones">Más opciones</string>
+
+    <string name="abrir">Abrir</string>
+    <string name="cerrar">Cerrar</string>
 </resources>

@@ -78,6 +78,7 @@ class LoginActivity : AppCompatActivity() {
                     val tipo = if( persona is Usuario ) "usuario" else if( persona is Moderador ) "moderador" else "admin"
 
                     val sharedPreferences = this.getSharedPreferences( "sesion", Context.MODE_PRIVATE ).edit()
+                    sharedPreferences.putInt("codigo_usuario", persona.id)
                     sharedPreferences.putString("correo_usuario", persona.correo)
                     sharedPreferences.putString("tipo_usuario", tipo)
 
