@@ -36,6 +36,10 @@
     <string name="txt_ayuda">Ayuda</string>
 
 
+    <!-- textos header -->
+    <string name="txt_nombreUser">Alma Marcela Gozo</string>
+    <string name="txt_nickNameUser">Almita</string>
+
     <!-- Textos de validaciones -->
     <string name="es_obligatorio">Este campo es obligatorio</string>
     <string name="maximo_caracteres">Máximo 10 caracteres</string>
@@ -43,7 +47,8 @@
     <string name="datos_incorrectos">Los datos son incorrectos</string>
     <string name="value_map">AIzaSyBR_0katflK0bUCPbtoCHXvWF8ja1dmxVE</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logout">cerrar sesion</string>
 </resources>

@@ -27,15 +27,14 @@ object Usuarios {
     }
 
 
-    /*
 
     fun findUserByCorreo(correo: String): Usuario? {
-        usuarios.forEach {
+        lista.forEach {
             if (correo.equals(it.correo)) {
                 return it
             }
         }
         return null
-    }*/
+    }
 
 }

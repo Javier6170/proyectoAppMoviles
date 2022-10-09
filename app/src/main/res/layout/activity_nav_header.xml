@@ -19,16 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:id="@+id/txt_nombreUser"
             android:layout_marginTop="5dp"
             android:textSize="22sp"
             android:layout_marginStart="10dp"
-            android:text="Alma Marcela Gozo"></TextView>
+            ></TextView>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:id="@+id/txt_nickUser"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_marginStart="10dp"
-            android:text="Almita"></TextView>
+            android:text="@string/txt_nickNameUser"></TextView>
 </LinearLayout>

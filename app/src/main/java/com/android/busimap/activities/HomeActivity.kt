@@ -6,12 +6,15 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.android.busimap.R
 import com.android.busimap.bd.Categorias
+import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.ActivityHomeBinding
+import com.android.busimap.databinding.ActivityNavHeaderBinding
 import com.android.busimap.fragmentos.*
 import com.android.busimap.modelo.Lugar
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -37,13 +40,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        lateinit var listaCategorias: ArrayList<Categorias>
+
 
         super.onCreate(savedInstanceState)
 
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
@@ -53,6 +57,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.btnCrearNegocio.setOnClickListener { abrirCrearNegocio() }
         binding.btnLogout.setOnClickListener { cerrarSesion() }
         binding.btnMisNegocios.setOnClickListener { reemplazarFragmento(2, MENU_MIS_LUGARES) }
+
 
 
 
@@ -74,6 +79,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             6 -> AyudaFragment()
             else -> AyudaFragment()
         }
+
 
         supportFragmentManager.beginTransaction()
             .replace(binding.contenidoPrincipal.id, fragmento)

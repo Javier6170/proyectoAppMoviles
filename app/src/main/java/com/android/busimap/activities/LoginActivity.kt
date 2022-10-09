@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.android.busimap.R
 import com.android.busimap.bd.Personas
 import com.android.busimap.databinding.ActivityLoginBinding
+import com.android.busimap.modelo.Administrador
 import com.android.busimap.modelo.Moderador
 import com.android.busimap.modelo.Usuario
 
@@ -27,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         if(correo!!.isNotEmpty() && tipo!!.isNotEmpty()){
 
             when(tipo){
-                "usuario" -> startActivity(Intent(this, MainActivity::class.java))
+                "usuario" -> startActivity(Intent(this, HomeActivity::class.java))
                 "moderador" -> startActivity( Intent(this, HomeActivityModerador::class.java) )
                 "admin" -> startActivity( Intent(this, AdministradorActivity::class.java) )
             }
@@ -46,53 +47,53 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun irPantallaRegistro() {
-        Log.v(LoginActivity::class.java.simpleName, "Pasar pantalla registro")
-        val intent = Intent(this, RegistroActivity::class.java)
-        startActivity(intent)
+        startActivity( Intent(this, RegistroActivity::class.java) )
     }
 
-    private fun login() {
+    fun login(){
 
         val correo = binding.emailUsuario.text
         var password = binding.passwordUsuario.text
 
-        if (correo.isEmpty()) {
+        if( correo.isEmpty() ){
             binding.emailLayout.isErrorEnabled = true
             binding.emailLayout.error = getString(R.string.es_obligatorio)
-        } else {
+        }else{
             binding.emailLayout.error = null
         }
 
-        if (password.isEmpty()) {
+        if( password.isEmpty() ){
             binding.passwordLayout.error = getString(R.string.es_obligatorio)
-        } else {
+        }else{
             binding.passwordLayout.error = null
         }
 
-        if (correo.isNotEmpty() && password.isNotEmpty()) {
+        if( correo.isNotEmpty() && password.isNotEmpty() ){
 
             try {
                 val persona = Personas.login(correo.toString(), password.toString())
 
-                if (persona != null) {
+                if(persona!=null){
 
-                    when (persona) {
-                        is Usuario -> startActivity(Intent(this, HomeActivity::class.java))
-                        is Moderador -> startActivity(
-                            Intent(
-                                this,
-                                HomeActivityModerador::class.java
-                            )
-                        )
+                    val tipo = if( persona is Usuario ) "usuario" else if( persona is Moderador ) "moderador" else "admin"
+
+                    val sharedPreferences = this.getSharedPreferences( "sesion", Context.MODE_PRIVATE ).edit()
+                    sharedPreferences.putString("correo_usuario", persona.correo)
+                    sharedPreferences.putString("tipo_usuario", tipo)
+
+                    sharedPreferences.commit()
+
+                    when(persona){
+                        is Usuario -> startActivity( Intent(this, HomeActivity::class.java) )
+                        is Moderador -> startActivity( Intent(this, HomeActivityModerador::class.java) )
+                        is Administrador -> startActivity( Intent(this, AdministradorActivity::class.java) )
                     }
-                } else {
-                    Toast.makeText(this, getString(R.string.datos_incorrectos), Toast.LENGTH_LONG)
-                        .show()
+                }else{
+                    Toast.makeText(this, getString(R.string.datos_incorrectos), Toast.LENGTH_LONG).show()
                 }
 
-            } catch (e: Exception) {
-                Toast.makeText(this, getString(R.string.datos_incorrectos), Toast.LENGTH_LONG)
-                    .show()
+            }catch (e:Exception){
+                Toast.makeText(this, getString(R.string.datos_incorrectos), Toast.LENGTH_LONG).show()
             }
 
         }
