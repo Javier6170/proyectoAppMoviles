@@ -1,27 +1,43 @@
 package com.android.busimap.activities
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.busimap.R
 import com.android.busimap.adapter.LugarAdapter
 import com.android.busimap.bd.Lugares
+import com.android.busimap.bd.Moderadores
+import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.ActivityHomeModeradorBinding
+import com.android.busimap.fragmentos.*
 import com.android.busimap.modelo.EstadoLugar
 import com.android.busimap.modelo.Lugar
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
-class HomeActivityModerador : AppCompatActivity() {
+class HomeActivityModerador : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
 
     lateinit var binding: ActivityHomeModeradorBinding
-    lateinit var listaLugares: ArrayList<Lugar>
-    lateinit var adapterLista: LugarAdapter
+
+    private lateinit var sh: SharedPreferences
+
+    private var MENU_INICIO = "inicio"
+    private var MENU_LUGARES_ACEPTADOS = "lugares_aceptados"
+    private var MENU_LUGARES_DENEGADOS = "lugares_denegados"
+    private var MENU_CONFIGURACIONES = "configuraciones"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,115 +46,86 @@ class HomeActivityModerador : AppCompatActivity() {
 
         binding = ActivityHomeModeradorBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        listaLugares = Lugares.listarPorEstado(EstadoLugar.SIN_REVISAR)
-
-        adapterLista = LugarAdapter(listaLugares)
-        binding.listaLugares.adapter = adapterLista
-        binding.listaLugares.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-        val simpleCallback: ItemTouchHelper.SimpleCallback = object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                var pos = viewHolder.adapterPosition
-                val codigoLugar = listaLugares[pos].id
-                val lugar = Lugares.obtener(codigoLugar)
-
-                when (direction) {
-
-                    ItemTouchHelper.LEFT -> {
-
-                        Lugares.cambiarEstado(codigoLugar, EstadoLugar.ACEPTADO)
-                        listaLugares.remove(lugar)
-                        adapterLista.notifyItemRemoved(pos)
-
-                        Snackbar.make(binding.listaLugares, "Lugar aceptado!", Snackbar.LENGTH_LONG)
-                            .setAction("Deshacer", View.OnClickListener {
-                                Lugares.cambiarEstado(codigoLugar, EstadoLugar.SIN_REVISAR)
-                                listaLugares.add(pos, lugar!!)
-                                adapterLista.notifyItemInserted(pos)
-                            }).show()
-                    }
-                    ItemTouchHelper.RIGHT -> {
-
-                        Lugares.cambiarEstado(codigoLugar, EstadoLugar.RECHAZADO)
-                        listaLugares.remove(lugar)
-                        adapterLista.notifyItemRemoved(pos)
-
-                        Snackbar.make(
-                            binding.listaLugares,
-                            "Lugar rechazado!",
-                            Snackbar.LENGTH_LONG
-                        )
-                            .setAction("Deshacer", View.OnClickListener {
-                                Lugares.cambiarEstado(codigoLugar, EstadoLugar.SIN_REVISAR)
-                                listaLugares.add(pos, lugar!!)
-                                adapterLista.notifyItemInserted(pos)
-                            }).show()
-                    }
-
-                }
-
-            }
-
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
-
-                RecyclerViewSwipeDecorator.Builder(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
-                    .addSwipeLeftBackgroundColor(
-                        ContextCompat.getColor(
-                            baseContext,
-                            R.color.color_green_light
-                        )
-                    )
-                    .addSwipeRightBackgroundColor(ContextCompat.getColor(baseContext, R.color.red))
-                    .addSwipeLeftLabel("Acceptor")
-                    .addSwipeRightLabel("Rechazar")
-                    .create()
-                    .decorate()
+        val navigationView: NavigationView = findViewById(R.id.navigation_view)
+        navigationView.setNavigationItemSelectedListener(this)
 
 
-            }
+        binding.btnMenu.setOnClickListener { abrirMenu() }
 
+        sh = getSharedPreferences("sesion", Context.MODE_PRIVATE)
+
+        val codigoUsuario = sh.getInt("codigo_usuario", 0)
+
+        if( codigoUsuario != 0 ){
+            val usuario = Moderadores.obtener(codigoUsuario)
+            val encabezado = binding.navigationView.getHeaderView(0)
+
+            encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = usuario!!.nombre
+            encabezado.findViewById<TextView>(R.id.txt_nickUser).text = usuario!!.correo
         }
 
-        val itemTouchHelper = ItemTouchHelper(simpleCallback)
-        itemTouchHelper.attachToRecyclerView(binding.listaLugares)
+        reemplazarFragmento(1, MENU_INICIO)
+        binding.navigationView.setNavigationItemSelectedListener(this)
 
 
+        binding.btnLogout.setOnClickListener { cerrarSesion() }
+
+
+    }
+
+    fun reemplazarFragmento(valor: Int, nombre: String) {
+
+        var fragmento: Fragment = when (valor) {
+            1 -> ListaLugaresModeradorFragment()
+            2 -> AceptadosModeradorFragment()
+            3 -> DenegadosModeradorFragment()
+            4 -> ConfiguracionesFragment()
+            else -> ConfiguracionesFragment()
+        }
+
+        supportFragmentManager.beginTransaction()
+            .replace(binding.contenidoPrincipal.id, fragmento)
+            .addToBackStack(nombre)
+            .commit()
+    }
+
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val count = supportFragmentManager.backStackEntryCount
+
+        if (count > 0) {
+            val nombre = supportFragmentManager.getBackStackEntryAt(count - 1).name
+            when (nombre) {
+                MENU_CONFIGURACIONES -> binding.navigationView.menu.getItem(2).isChecked = true
+                else -> binding.navigationView.menu.getItem(6).isChecked = true
+            }
+        }
+
+    }
+
+    fun cerrarSesion() {
+        val sh = getSharedPreferences("sesion", Context.MODE_PRIVATE).edit()
+        sh.clear()
+        sh.commit()
+        finish()
+        startActivity(Intent(this, LoginActivity::class.java))
+    }
+
+    fun abrirMenu() {
+        binding.drawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.navHomeModerador -> reemplazarFragmento(1, MENU_INICIO)
+            R.id.navAceptados -> reemplazarFragmento(2, MENU_LUGARES_ACEPTADOS)
+            R.id.navDenegados -> reemplazarFragmento(3, MENU_LUGARES_DENEGADOS)
+            R.id.navConfiguracionModerador -> reemplazarFragmento(4,MENU_CONFIGURACIONES )
+        }
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        return true
     }
 
 

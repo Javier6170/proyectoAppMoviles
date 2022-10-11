@@ -4,11 +4,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.android.busimap.activities.DetalleLugarActivity
 import com.android.busimap.bd.Categorias
+import com.android.busimap.bd.Comentarios
 import com.android.busimap.databinding.ActivityItemLugarBinding
 import com.android.busimap.modelo.Lugar
+import com.android.busimap.R
 
 class LugarAdapter(private var lista:ArrayList<Lugar>): RecyclerView.Adapter<LugarAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,9 +38,25 @@ class LugarAdapter(private var lista:ArrayList<Lugar>): RecyclerView.Adapter<Lug
         fun bind(lugar: Lugar){
             view.nombreLugar.text = lugar.nombre
             view.direccionLugar.text = lugar.direccion
-            view.estadoLugar.text = "Abierto"
-            view.horarioLugar.text = "Cierra a las 2:00"
-            view.listaCategorias.text = Categorias.obtener(lugar.idCategoria)!!.nombre
+
+            val estaAbierto = lugar.estaAbierto()
+
+            if(estaAbierto){
+                view.estadoLugar.setTextColor( ContextCompat.getColor(itemView.context, R.color.color_green_light ) )
+                view.horarioLugar.text = "Cierra a las ${lugar.obtenerHoraCierre()}"
+            }else{
+                view.estadoLugar.setTextColor( ContextCompat.getColor(itemView.context, R.color.red ) )
+                view.horarioLugar.text = "Abre el ${lugar.obtenerHoraApertura()}"
+            }
+
+            val calificacion = lugar.obtenerCalificacionPromedio( Comentarios.listar(lugar.id) )
+
+            for( i in 0..calificacion ){
+                (view.listaEstrellas[i] as TextView).setTextColor( ContextCompat.getColor(view.listaEstrellas.context, R.color.yellow) )
+            }
+
+            view.estadoLugar.text = if(estaAbierto){ view.estadoLugar.context.getString(R.string.abierto) }else{ view.estadoLugar.context.getString(R.string.cerrado) }
+            view.iconoLugar.text = Categorias.obtener(lugar.idCategoria)!!.icono
             codigoLugar = lugar.id
         }
 
@@ -46,4 +67,5 @@ class LugarAdapter(private var lista:ArrayList<Lugar>): RecyclerView.Adapter<Lug
         }
 
     }
+
 }

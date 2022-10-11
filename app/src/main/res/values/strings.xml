@@ -9,6 +9,13 @@
     <string name="txt_nickname">Nickname</string>
     <string name="txt_busqueda">Buscar lugar</string>
 
+
+    <!--textos registrar moderador -->
+
+    <string name="txt_contrasenaRepeat_moderador">Repetir Contraseña moderador</string>
+    <string name="txt_registrarse_moderador">Registrar moderador</string>
+    <string name="txt_nombre_moderador">Nombre del moderador</string>
+
     <string name="txt_restaurantes">restaurantes</string>
     <string name="txt_hoteles">hoteles</string>
     <string name="txt_almacen">almacen</string>
@@ -39,6 +46,10 @@
     <!-- textos header -->
     <string name="txt_nombreUser">Alma Marcela Gozo</string>
     <string name="txt_nickNameUser">Almita</string>
+
+    <!-- textos header -->
+    <string name="txt_crearModerador">Crear moderador</string>
+    <string name="txt_eliminar_moderador">Eliminar moderador</string>
 
     <!-- Textos de validaciones -->
     <string name="es_obligatorio">Este campo es obligatorio</string>
@@ -72,4 +83,10 @@
 
     <string name="abrir">Abrir</string>
     <string name="cerrar">Cerrar</string>
+    <string name="logout">cerrar sesion</string>
+    <string name="lugar_creado">Lugar creado</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_registroLugares">Registro de ubicaciones</string>
+    <string name="horarios_del_lugar">horarios lugar</string>
 </resources>

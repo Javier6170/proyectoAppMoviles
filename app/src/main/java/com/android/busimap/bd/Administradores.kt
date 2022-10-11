@@ -1,6 +1,7 @@
 package com.android.busimap.bd
 
 import com.android.busimap.modelo.Administrador
+import com.android.busimap.modelo.Moderador
 
 object Administradores {
 
@@ -18,6 +19,10 @@ object Administradores {
     fun login(correo:String, password:String): Administrador {
         val respuesta = lista.first { a -> a.password == password && a.correo == correo }
         return respuesta
+    }
+
+    fun obtener(id:Int): Administrador?{
+        return Administradores.lista.firstOrNull { a -> a.id == id }
     }
 
 }

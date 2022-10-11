@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lista"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -11,7 +12,7 @@
         android:layout_height="wrap_content"
         android:textSize="19sp"
         android:layout_marginEnd="2dp"
-        android:fontFamily="@font/font_awesome_6_free_solid_900"
+        android:fontFamily="@font/font_awesome_solid_900"
         android:text="\uf005" />
 
     <TextView
@@ -20,7 +21,7 @@
         android:layout_height="wrap_content"
         android:textSize="19sp"
         android:layout_marginEnd="2dp"
-        android:fontFamily="@font/font_awesome_6_free_solid_900"
+        android:fontFamily="@font/font_awesome_solid_900"
         android:text="\uf005" />
 
     <TextView

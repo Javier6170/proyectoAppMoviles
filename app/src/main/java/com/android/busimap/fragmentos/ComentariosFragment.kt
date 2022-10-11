@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.busimap.R
 import com.android.busimap.adapter.ComentarioAdapter
@@ -54,13 +55,14 @@ class ComentariosFragment : Fragment() {
         binding.listaComentarios.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         binding.comentarLugar.setOnClickListener { hacerComentario() }
-/*
+
         for ( i in 0 until binding.estrellas.lista.childCount){
             (binding.estrellas.lista[i] as TextView).setOnClickListener { presionarEstrella(i) }
         }
-*/
+
         return binding.root
     }
+
     fun hacerComentario(){
 
         val texto = binding.mensajeComentario.text.toString()
@@ -70,10 +72,8 @@ class ComentariosFragment : Fragment() {
 
             limpiarFormulario()
             Snackbar.make(binding.root, getString(R.string.comentario_realizado), Snackbar.LENGTH_LONG ).show()
-/*
-            lista.add(comentario)
-            */
 
+            lista.add(comentario)
             adapter.notifyItemInserted(lista.size-1)
 
         }else{
@@ -91,21 +91,15 @@ class ComentariosFragment : Fragment() {
     private fun presionarEstrella(pos:Int){
         estrellas = pos+1
         borrarSeleccion()
-        /*
         for( i in 0..pos ){
             (binding.estrellas.lista[i] as TextView).setTextColor( ContextCompat.getColor(requireContext(), R.color.yellow) )
         }
-
-         */
     }
 
     private fun borrarSeleccion(){
-        /*
         for ( i in 0 until binding.estrellas.lista.childCount){
             (binding.estrellas.lista[i] as TextView).setTextColor( colorPorDefecto )
         }
-
-         */
     }
 
     companion object{

@@ -21,7 +21,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/value_map" />
 
-
         <activity
             android:name=".activities.ResultadoBusqueda"
             android:exported="false" />

@@ -32,7 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <include android:id="@+id/estrellas" layout="@layout/estrellas" />
+            <include
+                android:id="@+id/estrellas"
+                layout="@layout/estrellas" />
 
             <Button
                 android:id="@+id/comentar_lugar"

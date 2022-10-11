@@ -1,6 +1,7 @@
 package com.android.busimap.bd
 
 import com.android.busimap.modelo.Moderador
+import com.android.busimap.modelo.Usuario
 
 object Moderadores {
     private val lista:ArrayList<Moderador> = ArrayList()
@@ -13,6 +14,11 @@ object Moderadores {
     fun listar():ArrayList<Moderador>{
         return lista
     }
+
+    fun agregar(moderador: Moderador){
+        lista.add(moderador)
+    }
+
 
     fun obtener(id:Int): Moderador?{
         return lista.firstOrNull { a -> a.id == id }

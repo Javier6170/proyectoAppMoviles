@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragmentos.CrearModeradorAdminFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imagen_logo"
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_logo_only"
+                android:layout_marginBottom="15dp"/>
+
+            <ImageView
+                android:id="@+id/imagen_register"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_registrarse"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"/>
+        </LinearLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nombre_layout"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp">
+            <EditText
+                android:id="@+id/nombre_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/fondo_forms"
+                android:hint="@string/txt_nombre_moderador"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_layout"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp">
+
+            <EditText
+                android:id="@+id/email_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/fondo_forms"
+                android:hint="@string/txt_correo"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_layout"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="15dp">
+
+            <EditText
+                android:id="@+id/password_usuario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/fondo_forms"
+                android:hint="@string/txt_contrasena"
+                android:inputType="textPassword"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/repetirPassword_layout"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="50dp">
+
+            <EditText
+                android:id="@+id/repetirPassword_user"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/fondo_forms"
+                android:hint="@string/txt_contrasenaRepeat_moderador"
+                android:inputType="textPassword"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_registro"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="@string/txt_registrarse_moderador"
+            />
+    </LinearLayout>
+
+</FrameLayout>

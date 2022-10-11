@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navHomeModerador"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="@string/txt_home" />
+    </group>
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navAceptados"
+            android:icon="@drawable/ic_baseline_done_all_24"
+            android:title="Registro aceptados" />
+        <item
+            android:id="@+id/navDenegados"
+            android:icon="@drawable/ic_baseline_delete_24"
+            android:title="Registro denegados" />
+        <item
+            android:id="@+id/navConfiguracionModerador"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/txt_configuraciones" />
+    </group>
+</menu>

@@ -3,16 +3,17 @@ package com.android.busimap.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.android.busimap.R
+import com.android.busimap.adapter.ViewPagerAdapter
 import com.android.busimap.bd.Categorias
 import com.android.busimap.bd.Lugares
 import com.android.busimap.databinding.ActivityDetalleLugarBinding
 import com.android.busimap.modelo.Lugar
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetalleLugarActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityDetalleLugarBinding
     private var codigoLugar:Int = 0
-    var lugar:Lugar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +22,16 @@ class DetalleLugarActivity : AppCompatActivity() {
 
         codigoLugar = intent.extras!!.getInt("codigo")
 
-        lugar = Lugares.obtener(codigoLugar)
+        if(codigoLugar != 0) {
 
-        if(lugar != null){
-            binding.nombreLugar.text = lugar!!.nombre
-            binding.descripcionLugar.text = lugar!!.descripcion
-            binding.telefonoLugar.text = lugar!!.telefonos.toString()
-            binding.direccionLugar.text = lugar!!.direccion
-            binding.iconoCategoria.text = Categorias.obtener(lugar!!.idCategoria)!!.icono
+            binding.viewPager.adapter = ViewPagerAdapter(this, codigoLugar)
+            TabLayoutMediator(binding.tabs, binding.viewPager) { tab, pos ->
+                when (pos) {
+                    0 -> tab.text = getString(R.string.info_lugar)
+                    1 -> tab.text = getString(R.string.comentarios)
+                }
+            }.attach()
+
         }
     }
 }

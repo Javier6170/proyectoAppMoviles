@@ -15,6 +15,7 @@ import com.android.busimap.modelo.Categoria
 import com.android.busimap.modelo.Ciudad
 import com.android.busimap.modelo.EstadoLugar
 import com.android.busimap.modelo.Lugar
+import com.google.android.material.snackbar.Snackbar
 
 class VistaCrearNegocio : AppCompatActivity() {
 
@@ -26,6 +27,7 @@ class VistaCrearNegocio : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityVistaCrearNegocioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -37,7 +39,9 @@ class VistaCrearNegocio : AppCompatActivity() {
 
         binding.btnCrearLugar.setOnClickListener { crearNuevoLugar() }
     }
+
     fun cargarCiudades(){
+
         var lista = ciudades.map { c -> c.nombre }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, lista)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -66,6 +70,7 @@ class VistaCrearNegocio : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) { }
         }
     }
+
 
     fun crearNuevoLugar(){
 
@@ -102,7 +107,7 @@ class VistaCrearNegocio : AppCompatActivity() {
 
         if(nombre.isNotEmpty() && descripcion.isNotEmpty() && telefono.isNotEmpty() && direccion.isNotEmpty() && idCiudad != -1 && idCategoria != -1)  {
 
-            val nuevoLugar = Lugar(7, nombre, descripcion, 1, EstadoLugar.SIN_REVISAR, idCategoria, direccion, 0f, 0f, idCiudad)
+            val nuevoLugar = Lugar(nombre, descripcion, 1, EstadoLugar.SIN_REVISAR, idCategoria, direccion, 0f, 0f, idCiudad)
 
             val telefonos: ArrayList<String> = ArrayList()
             telefonos.add(telefono)
@@ -110,12 +115,8 @@ class VistaCrearNegocio : AppCompatActivity() {
             nuevoLugar.telefonos = telefonos
 
             Lugares.crear(nuevoLugar)
-            Toast.makeText(this, getString(R.string.datos_correctos), Toast.LENGTH_LONG)
-                .show()
-            binding.nombreLugar.text = null
-            binding.descripcionLugar.text = null
-            binding.telefonoLugar.text = null
-            binding.direccionLugar.text = null
+
+            Snackbar.make(binding.root,  getString(R.string.lugar_creado), Toast.LENGTH_LONG).show()
         }
 
     }
