@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,68 +28,21 @@
                 android:layout_margin="10dp" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <ScrollView
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lista_mis_lugares"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cv">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:layout_margin="16dp"
-                        android:background="@drawable/fondo_barra_abajo"
-                        >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/person_photo"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
-                            android:src="@mipmap/ic_launcher"
-                            android:layout_marginRight="16dp"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/person_name"
-                            android:layout_toRightOf="@+id/person_photo"
-                            android:layout_alignParentTop="true"
-                            android:textSize="30sp"
-                            android:text="La lucerna"
-                            />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/person_age"
-                            android:layout_toRightOf="@+id/person_photo"
-                            android:layout_below="@+id/person_name"
-                            android:text="Parque sucre"
-                            />
-
-                    </RelativeLayout>
+                android:layout_height="match_parent"
+                android:layout_marginTop="100dp"/>
 
 
-                </androidx.cardview.widget.CardView>
-
-            </ScrollView>
-
-        </LinearLayout>
+        </RelativeLayout>
 
 
 
 
     </LinearLayout>
 
-</FrameLayout>
+</ScrollView>

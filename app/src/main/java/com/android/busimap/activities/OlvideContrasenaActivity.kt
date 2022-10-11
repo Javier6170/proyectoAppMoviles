@@ -1,15 +1,16 @@
 package com.android.busimap.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.android.busimap.bd.Usuarios
-
 import com.android.busimap.databinding.ActivityOlvideContrasenaBinding
 import com.android.busimap.modelo.Usuario
+import com.google.android.material.snackbar.Snackbar
 
 class OlvideContrasenaActivity : AppCompatActivity() {
 
+    private val SHORT_DURATION_MS = 4500
     lateinit var binding: ActivityOlvideContrasenaBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,11 +24,11 @@ class OlvideContrasenaActivity : AppCompatActivity() {
 
     fun recuperarContrasena() {
         val correo = binding.emailUsuario.text
-        val usuario:Usuario? = Usuarios.findUserByCorreo(correo)
+        val usuario:Usuario? = Usuarios.findUserByCorreo(correo.toString())
         if (usuario!= null){
-            Toast.makeText(this, "Contraseña: \n "+usuario.password, Toast.LENGTH_LONG).show()
+            Snackbar.make(binding.root,  "Contraseña: \n "+usuario.password, SHORT_DURATION_MS).show()
         }else{
-            Toast.makeText(this, "El usuario no existe", Toast.LENGTH_LONG).show()
+            Snackbar.make(binding.root,  "El usuario no existe", SHORT_DURATION_MS).show()
         }
 
     }

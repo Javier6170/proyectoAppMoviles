@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Javier/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable-anydpi/ic_menu.xml" value="0.1765" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/borde_redondo.xml" value="0.131" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/fondo_barra_abajo.xml" value="0.1765" />
@@ -40,7 +41,7 @@
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_nav_header.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_olvide_contrasena.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_registro.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_resultado_busqueda.xml" value="0.1" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_resultado_busqueda.xml" value="0.25" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_vista_crear_negocio.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_vista_negocios.xml" value="0.21041666666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/app_bar_main.xml" value="0.22447916666666667" />

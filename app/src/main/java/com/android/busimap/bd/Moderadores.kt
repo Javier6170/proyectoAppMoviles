@@ -19,6 +19,9 @@ object Moderadores {
         lista.add(moderador)
     }
 
+    fun eliminar(moderador: Moderador){
+        lista.remove(moderador)
+    }
 
     fun obtener(id:Int): Moderador?{
         return lista.firstOrNull { a -> a.id == id }

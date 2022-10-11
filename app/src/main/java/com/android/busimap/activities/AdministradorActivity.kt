@@ -96,7 +96,7 @@ class AdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationIt
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.navHomeModerador -> reemplazarFragmento(1, MENU_INICIO)
+            R.id.navHomeAdministrador -> reemplazarFragmento(1, MENU_INICIO)
             R.id.navCrearModerador -> reemplazarFragmento(2, MENU_CREAR_MODE)
             R.id.navEliminarModerador -> reemplazarFragmento(3, MENU_ELIMINAR_MODE)
             R.id.navConfiguracionModerador -> reemplazarFragmento(4,MENU_CONFIGURACIONES )

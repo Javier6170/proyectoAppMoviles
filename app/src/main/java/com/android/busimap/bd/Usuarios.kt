@@ -29,9 +29,9 @@ object Usuarios {
 
 
 
-    fun findUserByCorreo(correo: Editable): Usuario? {
+    fun findUserByCorreo(correo: String): Usuario? {
         for (i in lista){
-            if (i.correo.equals(correo)){
+            if (i.correo == correo){
                 return i
             }
         }
