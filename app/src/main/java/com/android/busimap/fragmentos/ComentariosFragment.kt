@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.busimap.R
 import com.android.busimap.adapter.ComentarioAdapter
 import com.android.busimap.bd.Comentarios
+import com.android.busimap.bd.Lugares
+import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.FragmentComentariosBinding
 import com.android.busimap.modelo.Comentario
+import com.android.busimap.modelo.Usuario
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -26,7 +29,10 @@ class ComentariosFragment : Fragment() {
     private lateinit var adapter: ComentarioAdapter
     var codigoUsuario:Int = 0
     private var colorPorDefecto: Int = 0
+    private var colorPorDefectoCorazones: Int = 0
+    private val SHORT_DURATION_MS = 4500
     private var estrellas = 0
+    private var corazones = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +54,7 @@ class ComentariosFragment : Fragment() {
         binding = FragmentComentariosBinding.inflate(inflater, container, false)
 
         colorPorDefecto = binding.estrellas.e1.textColors.defaultColor
+        colorPorDefectoCorazones = binding.corazones.e1.textColors.defaultColor
 
         lista = Comentarios.listar(codigoLugar)
         adapter = ComentarioAdapter(lista)
@@ -58,6 +65,10 @@ class ComentariosFragment : Fragment() {
 
         for ( i in 0 until binding.estrellas.lista.childCount){
             (binding.estrellas.lista[i] as TextView).setOnClickListener { presionarEstrella(i) }
+        }
+
+        for ( i in 0 until binding.corazones.listaCorazones.childCount){
+            (binding.corazones.listaCorazones[i] as TextView).setOnClickListener { presionarCorazon(i) }
         }
 
         return binding.root
@@ -85,6 +96,8 @@ class ComentariosFragment : Fragment() {
     private fun limpiarFormulario(){
         binding.mensajeComentario.setText("")
         borrarSeleccion()
+        borrarSeleccionCorazones()
+        corazones = 0
         estrellas = 0
     }
 
@@ -93,6 +106,30 @@ class ComentariosFragment : Fragment() {
         borrarSeleccion()
         for( i in 0..pos ){
             (binding.estrellas.lista[i] as TextView).setTextColor( ContextCompat.getColor(requireContext(), R.color.yellow) )
+        }
+    }
+
+    private fun presionarCorazon(pos:Int){
+        corazones = pos+1
+        borrarSeleccionCorazones()
+        if (corazones != 0){
+            val usuario: Usuario? = Usuarios.obtener(codigoUsuario)
+            Lugares.obtener(codigoLugar)?.let { usuario?.lugaresFavoritos!!.add(it) }
+            Snackbar.make(binding.root,  "Se ha convertido en tu lugar favorito", SHORT_DURATION_MS).show()
+        }else{
+
+            Snackbar.make(binding.root,  "Hemos eliminado de tus lugares favoritos", SHORT_DURATION_MS).show()
+        }
+
+        for( i in 0..pos ){
+            (binding.corazones.listaCorazones[i] as TextView).setTextColor( ContextCompat.getColor(requireContext(), R.color.red) )
+        }
+    }
+
+
+    private fun borrarSeleccionCorazones(){
+        for ( i in 0 until binding.corazones.listaCorazones.childCount){
+            (binding.corazones.listaCorazones[i] as TextView).setTextColor( colorPorDefectoCorazones )
         }
     }
 
