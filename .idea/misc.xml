@@ -7,6 +7,7 @@
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/borde_redondo.xml" value="0.131" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/fondo_barra_abajo.xml" value="0.1765" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/fondo_forms.xml" value="0.154" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/form_spinner.xml" value="0.1415" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/ic_baseline_accessibility_new_24.xml" value="0.1765" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/ic_baseline_add_business_24.xml" value="0.1765" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1415" />
@@ -32,10 +33,12 @@
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_home_moderador.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_inicio_fragment.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_item_lugar.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_login.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_maps.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_mis_lugares.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_nav_header.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_olvide_contrasena.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_registro.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_resultado_busqueda.xml" value="0.1" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/activity_vista_crear_negocio.xml" value="0.22447916666666667" />

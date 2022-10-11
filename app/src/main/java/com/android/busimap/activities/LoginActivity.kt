@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.android.busimap.R
 import com.android.busimap.bd.Personas
@@ -42,12 +43,17 @@ class LoginActivity : AppCompatActivity() {
 
             binding.btnLogin.setOnClickListener { login() }
             binding.btnRegistro.setOnClickListener { irPantallaRegistro() }
+            binding.btnOlvidarContrasena.setOnClickListener{ irPantallaOlvidoContrasena() }
         }
 
     }
 
     fun irPantallaRegistro() {
         startActivity( Intent(this, RegistroActivity::class.java) )
+    }
+
+    fun irPantallaOlvidoContrasena() {
+        startActivity( Intent(this, OlvideContrasenaActivity::class.java) )
     }
 
     fun login(){

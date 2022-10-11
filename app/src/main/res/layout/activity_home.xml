@@ -50,18 +50,6 @@
                 android:textSize="15sp" />
 
             <Button
-                android:id="@+id/btn_mis_negocios"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="130dp"
-                android:layout_height="80dp"
-                android:layout_marginBottom="2dp"
-                android:drawableTop="@drawable/ic_baseline_add_business_24"
-                android:text="Mis negocios"
-                android:textAllCaps="false"
-                android:textColor="@color/color_green_light"
-                android:textSize="15sp" />
-
-            <Button
                 android:id="@+id/btn_crear_negocio"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="140dp"

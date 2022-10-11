@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.btnMenu.setOnClickListener { abrirMenu() }
         binding.btnCrearNegocio.setOnClickListener { abrirCrearNegocio() }
         binding.btnLogout.setOnClickListener { cerrarSesion() }
-        binding.btnMisNegocios.setOnClickListener { reemplazarFragmento(2, MENU_MIS_LUGARES) }
+
 
 
         sh = getSharedPreferences("sesion", Context.MODE_PRIVATE)
@@ -68,6 +68,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         reemplazarFragmento(1, MENU_INICIO)
         binding.navigationView.setNavigationItemSelectedListener(this)
+
 
         supportFragmentManager.beginTransaction()
             .replace(binding.mapaCreado.id, MapaFragment())
@@ -127,6 +128,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val intent = Intent(this, VistaCrearNegocio::class.java)
         startActivity(intent)
     }
+
 
     fun abrirMenu() {
         binding.drawerLayout.openDrawer(GravityCompat.START)

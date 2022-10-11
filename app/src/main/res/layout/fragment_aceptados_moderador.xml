@@ -5,12 +5,45 @@
     android:layout_height="match_parent"
     tools:context=".fragmentos.AceptadosModeradorFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lista_lugares_aceptados"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_green_dark"
+                    android:paddingTop="20dp"
+                    >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:layout_marginStart="10dp"
+                            android:textAlignment="center"
+                            android:text="Aceptados"
+                            android:layout_margin="10dp" />
+                </LinearLayout>
+        </LinearLayout>
 
-        android:layout_marginTop="20dp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="70dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lista_lugares_aceptados"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginTop="20dp" />
+
+        </ScrollView>
+
+
 
 
 

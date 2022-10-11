@@ -61,7 +61,7 @@ class RegistroActivity : AppCompatActivity() {
 
         if (repetirPassword !== password) {
             if (correo.isNotEmpty() && password.isNotEmpty() && nombre.isNotEmpty() && nickname.isNotEmpty() && repetirPassword.isNotEmpty()) {
-                val user = Usuario(1, nombre.toString(), nickname.toString(), correo.toString(), password.toString())
+                val user = Usuario(Usuarios.listar().size+1, nombre.toString(), nickname.toString(), correo.toString(), password.toString())
                 Usuarios.agregar(user)
                 Toast.makeText(this, "Se ha registrador correctamente", Toast.LENGTH_LONG).show()
             }

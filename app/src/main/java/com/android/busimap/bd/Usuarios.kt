@@ -1,5 +1,6 @@
 package com.android.busimap.bd
 
+import android.text.Editable
 import com.android.busimap.modelo.Usuario
 
 object Usuarios {
@@ -28,10 +29,10 @@ object Usuarios {
 
 
 
-    fun findUserByCorreo(correo: String): Usuario? {
-        lista.forEach {
-            if (correo.equals(it.correo)) {
-                return it
+    fun findUserByCorreo(correo: Editable): Usuario? {
+        for (i in lista){
+            if (i.correo.equals(correo)){
+                return i
             }
         }
         return null

@@ -9,12 +9,10 @@ import android.widget.Toast
 import com.android.busimap.R
 import com.android.busimap.bd.Categorias
 import com.android.busimap.bd.Ciudades
+import com.android.busimap.bd.Horarios
 import com.android.busimap.bd.Lugares
 import com.android.busimap.databinding.ActivityVistaCrearNegocioBinding
-import com.android.busimap.modelo.Categoria
-import com.android.busimap.modelo.Ciudad
-import com.android.busimap.modelo.EstadoLugar
-import com.android.busimap.modelo.Lugar
+import com.android.busimap.modelo.*
 import com.google.android.material.snackbar.Snackbar
 
 class VistaCrearNegocio : AppCompatActivity() {
@@ -24,6 +22,7 @@ class VistaCrearNegocio : AppCompatActivity() {
     var posCategoria:Int = -1
     lateinit var ciudades:ArrayList<Ciudad>
     lateinit var categorias:ArrayList<Categoria>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +35,6 @@ class VistaCrearNegocio : AppCompatActivity() {
 
         cargarCiudades()
         cargarCategorias()
-
         binding.btnCrearLugar.setOnClickListener { crearNuevoLugar() }
     }
 
@@ -70,7 +68,6 @@ class VistaCrearNegocio : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) { }
         }
     }
-
 
     fun crearNuevoLugar(){
 
@@ -120,4 +117,5 @@ class VistaCrearNegocio : AppCompatActivity() {
         }
 
     }
+
 }

@@ -62,21 +62,36 @@
 
         <Spinner
             android:id="@+id/ciudad_lugar"
-            android:layout_width="350dp"
-            android:layout_height="55dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:background="@drawable/fondo_forms"
-            android:layout_marginBottom="10dp" />
-
+            style="@style/spinner_form"
+            />
         <Spinner
             android:id="@+id/categoria_lugar"
-            android:layout_width="350dp"
-            android:layout_height="55dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:background="@drawable/fondo_forms"
-            android:layout_marginBottom="10dp" />
+            style="@style/spinner_form" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/hora_abierto_layout"
+            style="@style/til_form">
+
+            <EditText
+                android:id="@+id/hora_abierto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fondo_forms"
+                android:hint="Hora abierto"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/hora_cerrado_layout"
+            style="@style/til_form">
+
+            <EditText
+                android:id="@+id/hora_cerrado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/fondo_forms"
+                android:hint="Hora cerrado"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/telefono_layout"
@@ -105,9 +120,8 @@
             android:id="@+id/btn_crear_lugar"
             android:layout_width="210dp"
             android:layout_height="60dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
             android:text="@string/btn_crear_lugar" />
 
     </LinearLayout>
+
 </ScrollView>
