@@ -37,6 +37,7 @@ class InicioFragment : Fragment() {
             true
         }
 
+
         return binding.root
     }
 

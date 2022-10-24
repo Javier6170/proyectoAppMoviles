@@ -1,6 +1,7 @@
 package com.android.busimap.activities
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -19,6 +20,7 @@ import com.android.busimap.databinding.ActivityHomeBinding
 
 import com.android.busimap.fragmentos.*
 import com.android.busimap.modelo.Lugar
+import com.android.busimap.util.Idioma
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -163,4 +165,22 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
+
+    fun cambiarIdioma()
+    {
+        val intent = intent
+        if (intent != null) {
+            intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            finish()
+            startActivity(intent)
+        }
+
+    }
+    override fun attachBaseContext(newBase: Context?) {
+        val localeUpdatedContext: ContextWrapper? = Idioma.cambiarIdioma(newBase!!)
+        super.attachBaseContext(localeUpdatedContext)
+    }
+
+
+
 }

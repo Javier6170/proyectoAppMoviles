@@ -5,9 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="30dp"
-    tools:context=".activities.ResultadoBusqueda">
+    android:layout_marginTop="20dp"
+    tools:context=".activities.ResultadoBusqueda"
+    >
 
+    <FrameLayout
+        android:id="@+id/contenido_principal"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
 
 
 

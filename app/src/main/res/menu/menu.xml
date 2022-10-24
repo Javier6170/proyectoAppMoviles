@@ -22,10 +22,12 @@
             android:id="@+id/navNotificaciones"
             android:icon="@drawable/ic_baseline_notifications_24"
             android:title="@string/txt_notificaciones" />
+
         <item
             android:id="@+id/navConfiguracion"
             android:icon="@drawable/ic_baseline_settings_24"
             android:title="@string/txt_configuraciones" />
+
         <item
             android:id="@+id/navAyuda"
             android:icon="@drawable/ic_baseline_help_24"

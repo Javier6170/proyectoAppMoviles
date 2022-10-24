@@ -26,7 +26,7 @@
                 android:textSize="18sp"
                 android:layout_marginStart="10dp"
                 android:textAlignment="center"
-                android:text="Por Revisar"
+                android:text="@string/txt_por_revisar"
                 android:layout_margin="10dp" />
         </LinearLayout>
     </LinearLayout>

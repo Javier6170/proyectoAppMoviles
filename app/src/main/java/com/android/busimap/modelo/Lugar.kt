@@ -1,5 +1,6 @@
 package com.android.busimap.modelo
 
+import com.android.busimap.activities.Posicion
 import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
@@ -10,7 +11,7 @@ class Lugar(var nombre:String,
             var estado:EstadoLugar,
             var idCategoria:Int,
             var direccion:String,
-            var latitud:Float, var longitud:Float,
+            var posicion: Posicion,
             var idCiudad:Int
 ) {
 
@@ -60,14 +61,19 @@ class Lugar(var nombre:String,
 
         val fecha = Calendar.getInstance()
         val dia = fecha.get(Calendar.DAY_OF_WEEK)
+        val hora = fecha.get(Calendar.HOUR_OF_DAY)
 
         var mensaje = ""
-        var pos = 0
+        var pos:Int
 
         for(horario in horarios){
             pos = horario.diaSemana.indexOf( DiaSemana.values()[dia-1] )
             mensaje = if( pos!=-1 ){
-                "${horario.diaSemana[pos+1].toString().lowercase()} a las ${horario.horaInicio}:00"
+                if( horario.horaInicio > hora ){
+                    "${horario.diaSemana[pos].toString().lowercase()} a las ${horario.horaInicio}:00"
+                }else{
+                    "${horario.diaSemana[pos+1].toString().lowercase()} a las ${horario.horaInicio}:00"
+                }
             }else{
                 "${horario.diaSemana[0].toString().lowercase()} a las ${horario.horaInicio}:00"
             }
@@ -91,6 +97,6 @@ class Lugar(var nombre:String,
     }
 
     override fun toString(): String {
-        return "Lugar(id=$id, nombre='$nombre', descripcion='$descripcion', idCreador=$idCreador, estado=$estado, idCategoria=$idCategoria, latitud=$latitud, longitud=$longitud, idCiudad=$idCiudad, imagenes=$imagenes, telefonos=$telefonos, fecha=$fecha, horarios=$horarios)"
+        return "Lugar(id=$id, nombre='$nombre', descripcion='$descripcion', idCreador=$idCreador, estado=$estado, idCategoria=$idCategoria, posicion=$posicion, idCiudad=$idCiudad, imagenes=$imagenes, telefonos=$telefonos, fecha=$fecha, horarios=$horarios)"
     }
 }

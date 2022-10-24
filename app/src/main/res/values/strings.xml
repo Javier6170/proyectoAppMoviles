@@ -90,4 +90,23 @@
     <string name="txt_registroLugares">Registro de ubicaciones</string>
     <string name="horarios_del_lugar">horarios lugar</string>
     <string name="txt_olvide_contrasena">olvide contraseña</string>
+    <string name="cambiar_idioma">Cambiar Idioma</string>
+    <string name="txt_menu">Menu</string>
+    <string name="recuperar_contrasena">Recuperar contraseña</string>
+    <string name="anadir_favoritos">Añadir favoritos</string>
+    <string name="bienvenido_administrador">Bienvenido administrador</string>
+    <string name="txt_por_revisar">Pendiente</string>
+    <string name="registro_denegados">Registro denegados</string>
+    <string name="txt_registro_aceptados">Registro aceptados</string>
+    <string name="horario_del_lugar">Horario lugar</string>
+    <string name="hora_inicio">Hora inicio</string>
+    <string name="hora_cierre">Hora cierre</string>
+    <string name="agregar_horario">Agregar horario</string>
+    <string name="lista_de_horario">Lista horarios</string>
+
+    <string name="mensaje_mapa">Es necesario seleccionar una ubicación en el mapa</string>
+
+    <!-- Validaciones -->
+    <string name="sin_registros">Aún no hay registros</string>
+    <string name="todos_obligatorios">Todos los campos son obligatorios</string>
 </resources>

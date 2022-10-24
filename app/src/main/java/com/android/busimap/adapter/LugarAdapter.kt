@@ -14,10 +14,11 @@ import com.android.busimap.bd.Comentarios
 import com.android.busimap.databinding.ActivityItemLugarBinding
 import com.android.busimap.modelo.Lugar
 import com.android.busimap.R
+import com.android.busimap.databinding.ItemLugarBinding
 
 class LugarAdapter(private var lista:ArrayList<Lugar>): RecyclerView.Adapter<LugarAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = ActivityItemLugarBinding.inflate( LayoutInflater.from(parent.context), parent, false )
+        val v = ItemLugarBinding.inflate( LayoutInflater.from(parent.context), parent, false )
         return ViewHolder(v)
     }
 
@@ -27,7 +28,7 @@ class LugarAdapter(private var lista:ArrayList<Lugar>): RecyclerView.Adapter<Lug
 
     override fun getItemCount() = lista.size
 
-    inner class ViewHolder(private var view:ActivityItemLugarBinding):RecyclerView.ViewHolder(view.root), View.OnClickListener{
+    inner class ViewHolder(private var view:ItemLugarBinding):RecyclerView.ViewHolder(view.root), View.OnClickListener{
 
         private var codigoLugar:Int = 0
 

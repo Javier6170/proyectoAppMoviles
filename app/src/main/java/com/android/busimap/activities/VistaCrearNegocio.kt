@@ -5,23 +5,38 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import com.android.busimap.R
 import com.android.busimap.bd.Categorias
 import com.android.busimap.bd.Ciudades
 import com.android.busimap.bd.Horarios
 import com.android.busimap.bd.Lugares
 import com.android.busimap.databinding.ActivityVistaCrearNegocioBinding
+import com.android.busimap.fragmentos.HorariosDialogoFragment
 import com.android.busimap.modelo.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
 
-class VistaCrearNegocio : AppCompatActivity() {
+class VistaCrearNegocio : AppCompatActivity(), HorariosDialogoFragment.OnHorarioCreadoListener,
+    OnMapReadyCallback {
 
     lateinit var binding: ActivityVistaCrearNegocioBinding
     var posCiudad:Int = -1
     var posCategoria:Int = -1
     lateinit var ciudades:ArrayList<Ciudad>
     lateinit var categorias:ArrayList<Categoria>
+    lateinit var horarios:ArrayList<Horario>
+    lateinit var gMap:GoogleMap
+    private var tienePermiso = false
+    private val defaultLocation = LatLng(4.550923, -75.6557201)
+    private var posicion:Posicion? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,12 +45,28 @@ class VistaCrearNegocio : AppCompatActivity() {
         binding = ActivityVistaCrearNegocioBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        horarios = ArrayList()
         ciudades = Ciudades.listar()
         categorias = Categorias.listar()
 
         cargarCiudades()
         cargarCategorias()
         binding.btnCrearLugar.setOnClickListener { crearNuevoLugar() }
+
+        binding.btnAsignarHorario.setOnClickListener{ mostrarDialogo()}
+
+
+        val mapFragment = supportFragmentManager.findFragmentById( R.id.mapa_crear_lugar ) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    fun mostrarDialogo(){
+
+        val dialog = HorariosDialogoFragment()
+        dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogoTitulo)
+        dialog.listener = this
+        dialog.show(supportFragmentManager, "Agregar")
+
     }
 
     fun cargarCiudades(){
@@ -102,20 +133,73 @@ class VistaCrearNegocio : AppCompatActivity() {
             binding.telefonoLayout.error = null
         }
 
-        if(nombre.isNotEmpty() && descripcion.isNotEmpty() && telefono.isNotEmpty() && direccion.isNotEmpty() && idCiudad != -1 && idCategoria != -1)  {
+        if(nombre.isNotEmpty() && descripcion.isNotEmpty() && telefono.isNotEmpty() && direccion.isNotEmpty() && horarios.isNotEmpty() && idCiudad != -1 && idCategoria != -1)  {
 
-            val nuevoLugar = Lugar(nombre, descripcion, 1, EstadoLugar.SIN_REVISAR, idCategoria, direccion, 0f, 0f, idCiudad)
+            if(posicion!=null) {
 
-            val telefonos: ArrayList<String> = ArrayList()
-            telefonos.add(telefono)
+                val nuevoLugar = Lugar(
+                    nombre,
+                    descripcion,
+                    1,
+                    EstadoLugar.SIN_REVISAR,
+                    idCategoria,
+                    direccion,
+                    posicion!!,
+                    idCiudad
+                )
 
-            nuevoLugar.telefonos = telefonos
+                val telefonos: ArrayList<String> = ArrayList()
+                telefonos.add(telefono)
 
-            Lugares.crear(nuevoLugar)
+                nuevoLugar.telefonos = telefonos
+                nuevoLugar.horarios = horarios
 
-            Snackbar.make(binding.root,  getString(R.string.lugar_creado), Toast.LENGTH_LONG).show()
+                Lugares.crear(nuevoLugar)
+
+                Snackbar.make(binding.root, getString(R.string.lugar_creado), Toast.LENGTH_LONG)
+                    .show()
+
+            }else{
+                Snackbar.make(binding.root, getString(R.string.mensaje_mapa), Toast.LENGTH_LONG)
+                    .show()
+            }
+        }else{
+            Snackbar.make(binding.root, getString(R.string.todos_obligatorios), Toast.LENGTH_LONG)
+                .show()
         }
 
+    }
+
+    override fun elegirHorario(horario: Horario) {
+        horario.diaSemana.forEach{
+            val textView = TextView(this)
+            textView.text = "${it.name.lowercase().replaceFirstChar { c -> c.uppercase() }}  ${horario.horaInicio}:00 - ${horario.horaCierre}:00 "
+            binding.listaHorarios.addView(textView)
+        }
+
+        binding.espacioHorarios.visibility = View.VISIBLE
+
+        horarios.add(horario)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        gMap = googleMap
+        gMap.uiSettings.isZoomControlsEnabled = true
+
+        gMap.moveCamera( CameraUpdateFactory.newLatLngZoom( defaultLocation, 12f ) )
+
+        gMap.setOnMapClickListener {
+
+            if(posicion==null){
+                posicion = Posicion()
+            }
+
+            posicion!!.lat = it.latitude
+            posicion!!.lng = it.longitude
+
+            gMap.clear()
+            gMap.addMarker( MarkerOptions().position(it) )
+        }
     }
 
 }

@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">BusiMap</string>
+    <string name="txt_correo">Email</string>
+    <string name="txt_iniciar_sesion">Log in</string>
+    <string name="txt_contrasena">password</string>
+    <string name="txt_contrasenaRepeat">repeat password</string>
+    <string name="txt_registrarse">sign in</string>
+    <string name="txt_nombre">name</string>
+    <string name="txt_nickname">nickname</string>
+    <string name="txt_busqueda">search places</string>
+
+
+    <!--textos registrar moderador -->
+
+    <string name="txt_contrasenaRepeat_moderador">repeat password moderator</string>
+    <string name="txt_registrarse_moderador">sign in moderator</string>
+    <string name="txt_nombre_moderador">name</string>
+
+    <string name="txt_restaurantes">restaurants</string>
+    <string name="txt_hoteles">hotels</string>
+    <string name="txt_almacen">shops</string>
+    <string name="txt_cafes">coffees</string>
+    <string name="txt_bares">pubs</string>
+
+    <string name="appwidget_text">example</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+
+    <!-- Textos de crear lugar -->
+    <string name="txt_nombre_lugar">name shop</string>
+    <string name="txt_descripcion_lugar">Description</string>
+    <string name="txt_telefono_lugar">phone</string>
+    <string name="btn_crear_lugar">create new shop</string>
+    <string name="btn_nuevo_lugar">new shop</string>
+    <string name="btn_direccion_lugar">address shop</string>
+
+    <!-- textos menu -->
+    <string name="txt_home">Home</string>
+    <string name="txt_mis_negocios">my places</string>
+    <string name="txt_favoritos">favorites</string>
+    <string name="txt_notificaciones">notifications</string>
+    <string name="txt_configuraciones">settings</string>
+    <string name="txt_ayuda">help</string>
+
+
+    <!-- textos header -->
+    <string name="txt_nombreUser">Alma Marcela Gozo</string>
+    <string name="txt_nickNameUser">Almita</string>
+
+    <!-- textos header -->
+    <string name="txt_crearModerador">create moderator</string>
+    <string name="txt_eliminar_moderador">delete moderator</string>
+
+    <!-- Textos de validaciones -->
+    <string name="es_obligatorio">this field is required</string>
+    <string name="maximo_caracteres">max 10 characters</string>
+    <string name="datos_correctos">the information is correct</string>
+    <string name="datos_incorrectos">the information is incorrect</string>
+    <string name="value_map">AIzaSyBR_0katflK0bUCPbtoCHXvWF8ja1dmxVE</string>
+    <string name="title_activity_maps">MapsActivity</string>
+
+    <!-- Textos detalle lugar -->
+    <string name="info_lugar">information place</string>
+    <string name="comentarios">comments</string>
+    <string name="escribir_comentario">type a new comment</string>
+    <string name="comentar">comment</string>
+    <string name="sin_comentarios">there are not comments</string>
+    <string name="comentario_realizado">comment has been sent</string>
+    <string name="comentario_error">is required type a comment and put number of stars</string>
+    <string name="abierto">open</string>
+    <string name="cerrado">close</string>
+
+    <!-- Textos moderador -->
+    <string name="deshacer">undo</string>
+    <string name="lugar_aceptado">¡place accepted!</string>
+    <string name="lugar_rechazado">¡place refused!</string>
+    <string name="aceptar">accept</string>
+    <string name="rechazar">decline</string>
+    <string name="lugares_rechazados">places refused</string>
+    <string name="perfil">profile</string>
+    <string name="cerrar_sesion">sign off</string>
+    <string name="mas_opciones">more...</string>
+
+    <string name="abrir">open</string>
+    <string name="cerrar">close</string>
+    <string name="logout">sign off</string>
+    <string name="lugar_creado">new place</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_registroLugares">new places</string>
+    <string name="horarios_del_lugar">timetables place</string>
+    <string name="txt_olvide_contrasena">forget password</string>
+    <string name="cambiar_idioma">change <language></language></string>
+
+    <string name="txt_menu">Menu</string>
+    <string name="recuperar_contrasena">recover password</string>
+
+    <string name="anadir_favoritos">add favorities</string>
+    <string name="bienvenido_administrador">welcome admin</string>
+    <string name="txt_por_revisar">to check</string>
+
+    <string name="registro_denegados">accepted</string>
+    <string name="txt_registro_aceptados">denied</string>
+    <string name="horario_del_lugar">Time place</string>
+    <string name="hora_inicio">Start Time</string>
+    <string name="hora_cierre">Closing time</string>
+    <string name="agregar_horario">add schedule</string>
+
+    <string name="lista_de_horario">schedule list</string>
+
+    <string name="mensaje_mapa">You need to select a location on the map</string>
+
+    <!-- Validaciones -->
+    <string name="sin_registros">No records yet</string>
+    <string name="todos_obligatorios">All fields are required</string>
+
+</resources>

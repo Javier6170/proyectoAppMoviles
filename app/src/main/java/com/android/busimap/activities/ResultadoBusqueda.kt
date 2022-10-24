@@ -7,6 +7,8 @@ import com.android.busimap.R
 import com.android.busimap.adapter.LugarAdapter
 import com.android.busimap.bd.Lugares
 import com.android.busimap.databinding.ActivityResultadoBusquedaBinding
+import com.android.busimap.fragmentos.InicioFragment
+
 import com.android.busimap.modelo.Lugar
 
 class ResultadoBusqueda : AppCompatActivity() {
@@ -28,6 +30,11 @@ class ResultadoBusqueda : AppCompatActivity() {
         if(textoBusqueda.isNotEmpty()){
             listaLugares = Lugares.buscarNombre(textoBusqueda)
         }
+
+        supportFragmentManager.beginTransaction()
+            .replace(binding.contenidoPrincipal.id, InicioFragment())
+            .addToBackStack("Inicio fragment")
+            .commit()
 
         val adapter = LugarAdapter(listaLugares)
         binding.listaLugares.adapter = adapter

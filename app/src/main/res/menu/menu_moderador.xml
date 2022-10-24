@@ -12,11 +12,11 @@
         <item
             android:id="@+id/navAceptados"
             android:icon="@drawable/ic_baseline_done_all_24"
-            android:title="Registro aceptados" />
+            android:title="@string/txt_registro_aceptados" />
         <item
             android:id="@+id/navDenegados"
             android:icon="@drawable/ic_baseline_delete_24"
-            android:title="Registro denegados" />
+            android:title="@string/registro_denegados" />
         <item
             android:id="@+id/navConfiguracionModerador"
             android:icon="@drawable/ic_baseline_settings_24"
