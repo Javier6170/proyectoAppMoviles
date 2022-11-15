@@ -3,17 +3,30 @@ package com.android.busimap.modelo
 import java.time.LocalDate
 import java.util.*
 
-class Comentario(var texto:String,
-                 var idUsuario:Int,
-                 var idLugar:Int,
-                 var calificacion:Int) {
+class Comentario() {
 
-    constructor(id:Int, texto:String, idUsuario:Int, idLugar: Int, calificacion: Int):this(texto, idUsuario, idLugar, calificacion){
-        this.id = id
+    constructor(texto: String, idUsuario: Int, idLugar: Int, calificacion: Int):this() {
+        this.texto = texto
+        this.idUsuario = idUsuario
+        this.idLugar = idLugar
+        this.calificacion = calificacion
     }
 
-    var id:Int = 0
-    var fecha:Date = Date()
+    constructor(id: Int, texto: String, idUsuario: Int, idLugar: Int, calificacion: Int) : this() {
+        this.id = id
+        this.texto = texto
+        this.idUsuario = idUsuario
+        this.idLugar = idLugar
+        this.calificacion = calificacion
+    }
+
+    var texto: String = ""
+    var key: String = ""
+    var idUsuario: Int = 0
+    var idLugar: Int = 0
+    var calificacion: Int = 0
+    var id: Int = 0
+    var fecha: Date = Date()
 
     override fun toString(): String {
         return "Comentario(id=$id, texto='$texto', idUsuario=$idUsuario, idLugar=$idLugar, calificacion=$calificacion, fecha=$fecha)"

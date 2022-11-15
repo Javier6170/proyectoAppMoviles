@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/Javier/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable-anydpi/ic_menu.xml" value="0.1765" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable-anydpi/right.xml" value="0.1425" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/borde_redondo.xml" value="0.131" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/fondo_barra_abajo.xml" value="0.1765" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/drawable/fondo_forms.xml" value="0.154" />
@@ -51,6 +52,7 @@
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/estrellas.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_aceptados_moderador.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_ayuda.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_blank.xml" value="0.21041666666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_comentarios.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_configuraciones.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_crear_moderador.xml" value="0.22447916666666667" />
@@ -60,12 +62,15 @@
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_favoritos.xml" value="0.21041666666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_horarios_dialogo.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_info_lugar.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_informacion_lugar.xml" value="0.21041666666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_inicio.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_inicio_administrador.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_lista_lugares_moderador.xml" value="0.21041666666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_lugares_acetados_y_denegados.xml" value="0.18" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_mapa.xml" value="0.21041666666666667" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_mapa_lugar.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_mis_negocios.xml" value="0.2" />
+        <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_modal_horarios.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/fragment_notificacions.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/item_comentario.xml" value="0.2234375" />
         <entry key="..\:/Users/Javier/BusiMap/app/src/main/res/layout/item_lugar.xml" value="0.22447916666666667" />

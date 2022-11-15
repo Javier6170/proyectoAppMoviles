@@ -5,26 +5,27 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.android.busimap.R
-import com.android.busimap.bd.Categorias
 import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.ActivityHomeBinding
 
 
 import com.android.busimap.fragmentos.*
-import com.android.busimap.modelo.Lugar
+import com.android.busimap.sqlite.BusimapDbHelper
+import com.android.busimap.util.EstadoConexion
 import com.android.busimap.util.Idioma
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
@@ -42,13 +43,19 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var binding: ActivityHomeBinding
     private lateinit var mMap: GoogleMap
     private lateinit var sh:SharedPreferences
+    private lateinit var db: BusimapDbHelper
+    var estadoConexion: Boolean=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        comprobarConexionInternet()
+
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
+        db = BusimapDbHelper(this)
 
         binding.btnMenu.setOnClickListener { abrirMenu() }
         binding.btnCrearNegocio.setOnClickListener { abrirCrearNegocio() }
@@ -61,11 +68,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val codigoUsuario = sh.getInt("codigo_usuario", 0)
 
         if( codigoUsuario != 0 ){
+
             val usuario = Usuarios.obtener(codigoUsuario)
             val encabezado = binding.navigationView.getHeaderView(0)
 
-            encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = usuario!!.nombre
-            encabezado.findViewById<TextView>(R.id.txt_nickUser).text = usuario!!.correo
+            //encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = usuario!!.nombre
+            //encabezado.findViewById<TextView>(R.id.txt_nickUser).text = usuario!!.correo
         }
 
         reemplazarFragmento(1, MENU_INICIO)
@@ -181,6 +189,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.attachBaseContext(localeUpdatedContext)
     }
 
+    fun comprobarConexionInternet(){
+        val conectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        conectivityManager.registerDefaultNetworkCallback(EstadoConexion(::comprobarConexion))
+    }
+
+    fun comprobarConexion(estado: Boolean){
+        estadoConexion=estado
+        Log.e("ESTADO CONEXION", estadoConexion.toString())
+    }
 
 
 }

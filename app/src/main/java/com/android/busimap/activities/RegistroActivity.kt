@@ -3,19 +3,24 @@ package com.android.busimap.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.android.busimap.R
 import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.ActivityRegistroBinding
 import com.android.busimap.modelo.Usuario
+import com.android.busimap.sqlite.BusimapDbHelper
+import com.google.android.material.snackbar.Snackbar
 
 class RegistroActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityRegistroBinding
+    private lateinit var db: BusimapDbHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityRegistroBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        db = BusimapDbHelper(this)
 
         binding.btnRegistro.setOnClickListener { registrarse() }
 
@@ -64,6 +69,12 @@ class RegistroActivity : AppCompatActivity() {
                 val user = Usuario(Usuarios.listar().size+1, nombre.toString(), nickname.toString(), correo.toString(), password.toString())
                 Usuarios.agregar(user)
                 Toast.makeText(this, "Se ha registrador correctamente", Toast.LENGTH_LONG).show()
+                try {
+                    db.crearUsuario(user)
+                    Toast.makeText(this, "Se ha registrador correctamente", Toast.LENGTH_LONG).show()
+                }catch (e:Exception){
+                    Snackbar.make(binding.root, e.message.toString(), Toast.LENGTH_LONG).show()
+                }
             }
         } else {
             Toast.makeText(this, "Debes colocar contraseñas iguales!!", Toast.LENGTH_LONG).show()

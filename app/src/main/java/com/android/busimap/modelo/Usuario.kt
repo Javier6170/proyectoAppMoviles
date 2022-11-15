@@ -1,22 +1,44 @@
 package com.android.busimap.modelo
 
-class Usuario(
-    id: Int,
-    nombre: String,
-    var nickname:String,
-    correo: String,
-    password: String):
-    Persona(
-        id,
-        nombre,
-        correo,
-        password) {
+import android.content.ContentValues
+import com.android.busimap.sqlite.UsuarioContrato
 
-    var lugaresFavoritos:ArrayList<Lugar> = ArrayList()
+class Usuario :
+    Persona {
 
+    var nickname: String = ""
+    var favoritos: ArrayList<Int> = ArrayList()
+    var key: String = ""
+
+    constructor(
+        id: Int,
+        nombre: String,
+        nickname: String,
+        correo: String,
+        password: String
+    ) : super(id, nombre, correo, password) {
+        this.nickname = nickname
+    }
+
+    var lugaresFavoritos: ArrayList<Lugar> = ArrayList()
+
+    fun esFavorito(codigo:Int):Boolean{
+        return favoritos.contains(codigo)
+    }
 
     override fun toString(): String {
         return "Usuario(nickname='$nickname') ${super.toString()}"
+    }
+
+    fun toContentValues(): ContentValues {
+
+        val values = ContentValues()
+        values.put(UsuarioContrato.NOMBRE, nombre)
+        values.put(UsuarioContrato.NICKNAME, nickname)
+        values.put(UsuarioContrato.CORREO, correo)
+        values.put(UsuarioContrato.PASSWORD, password)
+
+        return values
     }
 
 }

@@ -1,16 +1,12 @@
-package com.android.busimap.fragmentos
+package com.android.busimap.fragmentos.crearLugar
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.android.busimap.R
 import com.android.busimap.bd.Horarios
 import com.android.busimap.databinding.FragmentHorariosDialogoBinding
-import com.android.busimap.databinding.FragmentInfoLugarBinding
-import com.android.busimap.databinding.FragmentInicioBinding
 import com.android.busimap.modelo.DiaSemana
 import com.android.busimap.modelo.Horario
 import com.google.android.material.chip.Chip

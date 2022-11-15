@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "118626529648",
+    "project_id": "busimap-996a0",
+    "storage_bucket": "busimap-996a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118626529648:android:c189303702b0e650539fb5",
+        "android_client_info": {
+          "package_name": "com.android.busimap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "118626529648-smutcu6qodkdo6u8jof3q1385sk2htn5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnwrfHTFA5C5tLNzP_i3bnqHrb31rrlXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "118626529648-smutcu6qodkdo6u8jof3q1385sk2htn5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".fragmentos.HorariosDialogoFragment">
+    tools:context=".fragmentos.crearLugar.HorariosDialogoFragment">
 
     <TextView
         android:layout_width="wrap_content"
