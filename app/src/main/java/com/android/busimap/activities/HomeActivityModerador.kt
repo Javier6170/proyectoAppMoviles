@@ -3,36 +3,26 @@ package com.android.busimap.activities
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Canvas
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.busimap.R
-import com.android.busimap.adapter.LugarAdapter
-import com.android.busimap.bd.Lugares
-import com.android.busimap.bd.Moderadores
-import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.ActivityHomeModeradorBinding
 import com.android.busimap.fragmentos.*
-import com.android.busimap.modelo.EstadoLugar
-import com.android.busimap.modelo.Lugar
+import com.android.busimap.modelo.Usuario
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class HomeActivityModerador : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
 
     lateinit var binding: ActivityHomeModeradorBinding
 
-    private lateinit var sh: SharedPreferences
 
     private var MENU_INICIO = "inicio"
     private var MENU_LUGARES_ACEPTADOS = "lugares_aceptados"
@@ -49,19 +39,23 @@ class HomeActivityModerador : AppCompatActivity() , NavigationView.OnNavigationI
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-
         binding.btnMenu.setOnClickListener { abrirMenu() }
 
-        sh = getSharedPreferences("sesion", Context.MODE_PRIVATE)
 
-        val codigoUsuario = sh.getInt("codigo_usuario", 0)
 
-        if( codigoUsuario != 0 ){
-            val usuario = Moderadores.obtener(codigoUsuario)
-            val encabezado = binding.navigationView.getHeaderView(0)
+        var user = FirebaseAuth.getInstance().currentUser
+        val encabezado = binding.navigationView.getHeaderView(0)
 
-            encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = usuario!!.nombre
-            encabezado.findViewById<TextView>(R.id.txt_nickUser).text = usuario!!.correo
+        if (user != null) {
+            encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = user.email
+            Firebase.firestore
+                .collection("usuarios")
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener { u ->
+                    val nickname = u.toObject(Usuario::class.java)?.nickname
+                    encabezado.findViewById<TextView>(R.id.txt_nickUser).text = nickname
+                }
         }
 
         reemplazarFragmento(1, MENU_INICIO)
@@ -106,11 +100,10 @@ class HomeActivityModerador : AppCompatActivity() , NavigationView.OnNavigationI
     }
 
     fun cerrarSesion() {
-        val sh = getSharedPreferences("sesion", Context.MODE_PRIVATE).edit()
-        sh.clear()
-        sh.commit()
-        finish()
-        startActivity(Intent(this, LoginActivity::class.java))
+        Firebase.auth.signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        this.startActivity(intent)
+        this.finish()
     }
 
     fun abrirMenu() {

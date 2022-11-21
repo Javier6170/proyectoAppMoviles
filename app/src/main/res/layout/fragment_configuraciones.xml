@@ -13,6 +13,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/encabezado"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -28,6 +29,7 @@
                 android:textAlignment="center"
                 ></ImageView>
             <TextView
+                android:id="@+id/txt_nombreUserN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -37,6 +39,7 @@
                 android:layout_marginStart="10dp"
                 android:text="Alma Marcela Gozo"></TextView>
             <TextView
+                android:id="@+id/txt_nickUserN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

@@ -23,13 +23,18 @@ class OlvideContrasenaActivity : AppCompatActivity() {
     }
 
     fun recuperarContrasena() {
+
+
+        /*
         val correo = binding.emailUsuario.text
         val usuario:Usuario? = Usuarios.findUserByCorreo(correo.toString())
         if (usuario!= null){
-            Snackbar.make(binding.root,  "Contraseña: \n "+usuario.password, SHORT_DURATION_MS).show()
+           // Snackbar.make(binding.root,  "Contraseña: \n "+usuario.password, SHORT_DURATION_MS).show()
         }else{
             Snackbar.make(binding.root,  "El usuario no existe", SHORT_DURATION_MS).show()
         }
+
+         */
 
     }
 }

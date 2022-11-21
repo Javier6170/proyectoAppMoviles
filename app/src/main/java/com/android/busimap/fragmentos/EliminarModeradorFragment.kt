@@ -7,13 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import com.android.busimap.R
-import com.android.busimap.bd.Moderadores
-import com.android.busimap.databinding.FragmentDenegadosModeradorBinding
 import com.android.busimap.databinding.FragmentEliminarModeradorBinding
-import com.android.busimap.modelo.Ciudad
-import com.android.busimap.modelo.Moderador
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -23,11 +17,12 @@ class EliminarModeradorFragment : Fragment() {
     var posModerador: Int = -1
     private val SHORT_DURATION_MS = 4500
 
-    lateinit var moderadores: ArrayList<Moderador>
+    //lateinit var moderadores: ArrayList<Moderador>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        moderadores = Moderadores.listar()
+
+        //moderadores = Moderadores.listar()
 
     }
 
@@ -42,6 +37,7 @@ class EliminarModeradorFragment : Fragment() {
     }
 
     fun cargarModeradores() {
+        /*
         var lista = moderadores.map { c -> c.nombre }
         val adapter =
             activity?.let { ArrayAdapter(it, android.R.layout.simple_spinner_item, lista) }
@@ -56,11 +52,13 @@ class EliminarModeradorFragment : Fragment() {
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}
             }
+
+         */
     }
 
     fun eliminarMode() {
-        val idModerador = moderadores[posModerador].id
-
+        //val idModerador = moderadores[posModerador].id
+/*
         var mode: Moderador? = Moderadores.obtener(idModerador)
 
         if (mode != null) {
@@ -69,6 +67,8 @@ class EliminarModeradorFragment : Fragment() {
         } else {
             Snackbar.make(binding.root, "Persona no existe", SHORT_DURATION_MS).show()
         }
+
+ */
     }
 
     companion object {

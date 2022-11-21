@@ -1,8 +1,7 @@
 package com.android.busimap.bd
 
-import com.android.busimap.modelo.Persona
-
 object Personas {
+    /*
     fun login(correo:String, password:String): Persona?{
         var respuesta:Persona?
 
@@ -18,4 +17,6 @@ object Personas {
 
         return respuesta
     }
+
+     */
 }

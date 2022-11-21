@@ -3,28 +3,29 @@ package com.android.busimap.modelo
 import android.content.ContentValues
 import com.android.busimap.sqlite.UsuarioContrato
 
-class Usuario :
-    Persona {
+class Usuario() {
 
+
+    var nombre: String = ""
     var nickname: String = ""
-    var favoritos: ArrayList<Int> = ArrayList()
+
     var key: String = ""
+    var uid: String = ""
+    var rol: Rol? = Rol.CLIENTE
+
 
     constructor(
-        id: Int,
         nombre: String,
         nickname: String,
-        correo: String,
-        password: String
-    ) : super(id, nombre, correo, password) {
+        rol: Rol
+    ):this() {
+
+        this.nombre = nombre
         this.nickname = nickname
+        this.rol = rol
     }
 
-    var lugaresFavoritos: ArrayList<Lugar> = ArrayList()
 
-    fun esFavorito(codigo:Int):Boolean{
-        return favoritos.contains(codigo)
-    }
 
     override fun toString(): String {
         return "Usuario(nickname='$nickname') ${super.toString()}"
@@ -35,8 +36,8 @@ class Usuario :
         val values = ContentValues()
         values.put(UsuarioContrato.NOMBRE, nombre)
         values.put(UsuarioContrato.NICKNAME, nickname)
-        values.put(UsuarioContrato.CORREO, correo)
-        values.put(UsuarioContrato.PASSWORD, password)
+        //values.put(UsuarioContrato.CORREO, correo)
+        //values.put(UsuarioContrato.PASSWORD, password)
 
         return values
     }

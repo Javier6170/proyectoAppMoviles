@@ -54,6 +54,7 @@ class BusimapDbHelper(context: Context) : SQLiteOpenHelper(context, "usuarios.db
 
     @Throws(Exception::class)
     fun crearLugar(lugar: Lugar) {
+       /*
         val lugarBuscado = obtenerLugar(lugar.id)
         if (lugarBuscado == null) {
             try {
@@ -69,15 +70,20 @@ class BusimapDbHelper(context: Context) : SQLiteOpenHelper(context, "usuarios.db
             }
         }
 
+
+        */
     }
 
     fun actualizarUsuario(usuario: Usuario) {
+       /*
         writableDatabase.update(
             UsuarioContrato.TABLE_NAME,
             usuario.toContentValues(),
             "${UsuarioContrato.ID} = ?",
             arrayOf(usuario.id.toString())
         )
+
+        */
     }
 
     fun eliminarUsuario(id: Int) {
@@ -89,7 +95,8 @@ class BusimapDbHelper(context: Context) : SQLiteOpenHelper(context, "usuarios.db
         )
     }
 
-    fun listarUsuarios(): ArrayList<Usuario> {
+    /*fun listarUsuarios(): ArrayList<Usuario> {
+        /*
         val lista: ArrayList<Usuario> = ArrayList()
 
         val c: Cursor = readableDatabase.query(
@@ -123,9 +130,13 @@ class BusimapDbHelper(context: Context) : SQLiteOpenHelper(context, "usuarios.db
         }
 
         return lista
+
+         */
     }
 
+     */
 
+/*
     fun listarLugares(): ArrayList<Lugar> {
         val lista: ArrayList<Lugar> = ArrayList()
 
@@ -168,7 +179,11 @@ class BusimapDbHelper(context: Context) : SQLiteOpenHelper(context, "usuarios.db
         return lista
     }
 
+
+ */
+    /*
     fun obtenerUsuario(id: Int): Usuario? {
+
         var usuario: Usuario? = null
 
         val c: Cursor = readableDatabase.query(
@@ -195,6 +210,9 @@ class BusimapDbHelper(context: Context) : SQLiteOpenHelper(context, "usuarios.db
         return usuario
     }
 
+
+     */
+    /*
     fun obtenerLugar(id: Int): Lugar? {
         var lugar: Lugar? = null
 
@@ -234,7 +252,9 @@ class BusimapDbHelper(context: Context) : SQLiteOpenHelper(context, "usuarios.db
         return lugar
     }
 
+     */
 
+/*
     fun comprobarDatos(correo: String, password: String): Usuario? {
         var usuario: Usuario? = null
 
@@ -261,4 +281,6 @@ class BusimapDbHelper(context: Context) : SQLiteOpenHelper(context, "usuarios.db
 
         return usuario
     }
+
+ */
 }

@@ -13,7 +13,7 @@ class Lugar() {
     constructor(
         nombre: String,
         descripcion: String,
-        idCreador: Int,
+        idCreador: String,
         estado: EstadoLugar,
         idCategoria: Int,
         direccion: String,
@@ -33,13 +33,12 @@ class Lugar() {
     constructor(
         nombre: String,
         descripcion: String,
-        idCreador: Int,
+        idCreador: String,
         estado: EstadoLugar,
         idCategoria: Int,
         direccion: String,
         posicion: Posicion,
         idCiudad: Int,
-        id: Int,
         imagenes: ArrayList<String>,
         telefonos: ArrayList<String>,
         fecha: Date,
@@ -53,7 +52,6 @@ class Lugar() {
         this.direccion = direccion
         this.posicion = posicion
         this.idCiudad = idCiudad
-        this.id = id
         this.imagenes = imagenes
         this.telefonos = telefonos
         this.fecha = fecha
@@ -62,16 +60,14 @@ class Lugar() {
 
 
     constructor(
-        id: Int,
         nombre: String,
         descripcion: String,
         lat: Double,
         lng: Double,
         direccion: String,
         idCategoria: Int,
-        idCreador: Int
+        idCreador: String
     ) : this() {
-        this.id = id
         this.nombre = nombre
         this.descripcion = descripcion
         val pos = Posicion(lat, lng)
@@ -82,11 +78,11 @@ class Lugar() {
     }
 
 
-    var id: Int = 0
+
     var key: String = ""
     var nombre: String = ""
     var descripcion: String = ""
-    var idCreador: Int = 0
+    var idCreador: String = ""
     var estado: EstadoLugar = EstadoLugar.SIN_REVISAR
     var idCategoria: Int = 0
     var direccion: String = ""
@@ -176,14 +172,12 @@ class Lugar() {
         return promedio
     }
 
-    override fun toString(): String {
-        return "Lugar(id=$id, nombre='$nombre', descripcion='$descripcion', idCreador=$idCreador, estado=$estado, idCategoria=$idCategoria, posicion=$posicion, idCiudad=$idCiudad, imagenes=$imagenes, telefonos=$telefonos, fecha=$fecha, horarios=$horarios)"
-    }
+
 
     fun toContentValues(): ContentValues {
 
         val values = ContentValues()
-        values.put(LugarContrato.ID, id)
+        //values.put(LugarContrato.ID, id)
         values.put(LugarContrato.NOMBRE, nombre)
         values.put(LugarContrato.DESCRIPCION, descripcion)
         values.put(LugarContrato.LAT, posicion.lat)

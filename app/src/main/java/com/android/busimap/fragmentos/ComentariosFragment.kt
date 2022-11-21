@@ -1,6 +1,5 @@
 package com.android.busimap.fragmentos
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,36 +12,76 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.busimap.R
 import com.android.busimap.adapter.ComentarioAdapter
 import com.android.busimap.bd.Comentarios
-import com.android.busimap.bd.Lugares
-import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.FragmentComentariosBinding
 import com.android.busimap.modelo.Comentario
+import com.android.busimap.modelo.Favorito
+import com.android.busimap.modelo.Lugar
 import com.android.busimap.modelo.Usuario
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 
 
 class ComentariosFragment : Fragment() {
 
-    lateinit var binding:FragmentComentariosBinding
-    var lista:ArrayList<Comentario> = ArrayList()
-    private var codigoLugar:Int = 0
+    lateinit var binding: FragmentComentariosBinding
+    var lista: ArrayList<Comentario> = ArrayList()
+    private var codigoLugar: String = ""
     private lateinit var adapter: ComentarioAdapter
-    var codigoUsuario:Int = 0
+    private var esFavorito = false
+
     private var colorPorDefecto: Int = 0
     private var colorPorDefectoCorazones: Int = 0
     private val SHORT_DURATION_MS = 4500
     private var estrellas = 0
     private var corazones = 0
 
+    var user: FirebaseUser? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val sp = requireActivity().getSharedPreferences("sesion", Context.MODE_PRIVATE)
-        codigoUsuario = sp.getInt("codigo_usuario", -1)
-
-        if(arguments != null){
-            codigoLugar = requireArguments().getInt("id_lugar")
+        if (arguments != null) {
+            codigoLugar = requireArguments().getString("id_lugar", "")
         }
+
+        user = FirebaseAuth.getInstance().currentUser
+
+        Firebase
+            .firestore
+            .collection("usuarios")
+            .document(user!!.uid)
+            .collection("favoritos")
+            .whereEqualTo("codigoLugar", codigoLugar)
+            .get()
+            .addOnSuccessListener {
+                var favorito = it.toObjects(Favorito::class.java)
+                favorito.forEach { u ->
+                    Firebase.firestore
+                        .collection("lugares")
+                        .document(u.codigoLugar)
+                        .get()
+                        .addOnSuccessListener { l ->
+                            var lugar = l.toObject(Lugar::class.java)
+                            if (lugar!=null){
+                                esFavorito = true
+                                val pos = 0
+                                estrellas = pos + 1
+                                for (i in 0..pos) {
+                                    (binding.corazones.listaCorazones[i] as TextView).setTextColor(
+                                        ContextCompat.getColor(
+                                            requireContext(),
+                                            R.color.red
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                }
+            }
+
 
     }
 
@@ -56,44 +95,84 @@ class ComentariosFragment : Fragment() {
         colorPorDefecto = binding.estrellas.e1.textColors.defaultColor
         colorPorDefectoCorazones = binding.corazones.e1.textColors.defaultColor
 
-        lista = Comentarios.listar(codigoLugar)
-        adapter = ComentarioAdapter(lista)
-        binding.listaComentarios.adapter = adapter
-        binding.listaComentarios.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        Firebase.firestore
+            .collection("lugares")
+            .document(codigoLugar)
+            .collection("comentarios")
+            .get()
+            .addOnSuccessListener {
+                for (doc in it) {
+                    val comentario = doc.toObject(Comentario::class.java)
+                    comentario.key = doc.id
+                    lista.add(comentario)
+
+
+                    adapter = ComentarioAdapter(lista)
+                    binding.listaComentarios.adapter = adapter
+                    binding.listaComentarios.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    adapter.notifyItemInserted(lista.size - 1)
+                }
+            }
+            .addOnFailureListener {
+                Snackbar.make(binding.root, "${it.message}", Snackbar.LENGTH_LONG).show()
+            }
+
 
         binding.comentarLugar.setOnClickListener { hacerComentario() }
 
-        for ( i in 0 until binding.estrellas.lista.childCount){
+        for (i in 0 until binding.estrellas.lista.childCount) {
             (binding.estrellas.lista[i] as TextView).setOnClickListener { presionarEstrella(i) }
         }
 
-        for ( i in 0 until binding.corazones.listaCorazones.childCount){
-            (binding.corazones.listaCorazones[i] as TextView).setOnClickListener { presionarCorazon(i) }
+        for (i in 0 until binding.corazones.listaCorazones.childCount) {
+            (binding.corazones.listaCorazones[i] as TextView).setOnClickListener { hacerFavorito(i) }
         }
+
+
 
         return binding.root
     }
 
-    fun hacerComentario(){
+    fun hacerComentario() {
 
         val texto = binding.mensajeComentario.text.toString()
 
-        if( texto.isNotEmpty() && estrellas > 0){
-            val comentario = Comentarios.crear( Comentario(texto, codigoUsuario, codigoLugar, estrellas) )
+        user = FirebaseAuth.getInstance().currentUser
 
-            limpiarFormulario()
-            Snackbar.make(binding.root, getString(R.string.comentario_realizado), Snackbar.LENGTH_LONG ).show()
+        if (texto.isNotEmpty() && estrellas > 0) {
+            if (user != null) {
+                val comentario = Comentario(texto, user!!.uid, estrellas)
+                Firebase.firestore
+                    .collection("lugares")
+                    .document(codigoLugar)
+                    .collection("comentarios")
+                    .add(comentario)
+                    .addOnSuccessListener {
+                        binding.txtSinComentarios.visibility = View.GONE
 
-            lista.add(comentario)
-            adapter.notifyItemInserted(lista.size-1)
+                        limpiarFormulario()
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.comentario_realizado),
+                            Snackbar.LENGTH_LONG
+                        ).show()
 
-        }else{
-            Snackbar.make(binding.root, getString(R.string.comentario_error), Snackbar.LENGTH_LONG ).show()
+                        lista.add(comentario)
+                        adapter.notifyItemInserted(lista.size - 1)
+                    }
+                    .addOnFailureListener {
+                        Snackbar.make(binding.root, "${it.message}", Snackbar.LENGTH_LONG).show()
+                    }
+            }
+        } else {
+            Snackbar.make(binding.root, getString(R.string.comentario_error), Snackbar.LENGTH_LONG)
+                .show()
         }
-
     }
 
-    private fun limpiarFormulario(){
+    private fun limpiarFormulario() {
         binding.mensajeComentario.setText("")
         borrarSeleccion()
         borrarSeleccionCorazones()
@@ -101,49 +180,81 @@ class ComentariosFragment : Fragment() {
         estrellas = 0
     }
 
-    private fun presionarEstrella(pos:Int){
-        estrellas = pos+1
+    private fun presionarEstrella(pos: Int) {
+        estrellas = pos + 1
         borrarSeleccion()
-        for( i in 0..pos ){
-            (binding.estrellas.lista[i] as TextView).setTextColor( ContextCompat.getColor(requireContext(), R.color.yellow) )
+        for (i in 0..pos) {
+            (binding.estrellas.lista[i] as TextView).setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.yellow
+                )
+            )
         }
     }
 
-    private fun presionarCorazon(pos:Int){
-        corazones = pos+1
-        borrarSeleccionCorazones()
-        if (corazones != 0){
-            val usuario: Usuario? = Usuarios.obtener(codigoUsuario)
-            Lugares.obtener(codigoLugar)?.let { usuario?.lugaresFavoritos!!.add(it) }
-            Snackbar.make(binding.root,  "Se ha convertido en tu lugar favorito", SHORT_DURATION_MS).show()
+    private fun hacerFavorito(pos: Int) {
+        if (!esFavorito){
+                for (i in 0..pos) {
+                    (binding.corazones.listaCorazones[i] as TextView).setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.red
+                        )
+                    )
+                }
+                if (user != null) {
+                    var favorito = Favorito(codigoLugar)
+                    Firebase.firestore
+                        .collection("usuarios")
+                        .document(user!!.uid)
+                        .collection("favoritos")
+                        .document(codigoLugar)
+                        .set(favorito)
+                        .addOnSuccessListener {
+                            Snackbar.make(
+                                binding.root,
+                                "Se ha convertido en tu lugar favorito",
+                                SHORT_DURATION_MS
+                            ).show()
+                        }
+                }
         }else{
+            borrarSeleccionCorazones()
+            user = FirebaseAuth.getInstance().currentUser
+            Firebase.firestore
+                .collection("usuarios")
+                .document(user!!.uid)
+                .collection("favoritos")
+                .document(codigoLugar)
+                .delete()
+                .addOnSuccessListener {
+                    Snackbar.make(
+                        binding.root,
+                        "Hemos eliminado de tus lugares favoritos",
+                        SHORT_DURATION_MS
+                    ).show()
 
-            Snackbar.make(binding.root,  "Hemos eliminado de tus lugares favoritos", SHORT_DURATION_MS).show()
-        }
+                }
 
-        for( i in 0..pos ){
-            (binding.corazones.listaCorazones[i] as TextView).setTextColor( ContextCompat.getColor(requireContext(), R.color.red) )
-        }
-    }
-
-
-    private fun borrarSeleccionCorazones(){
-        for ( i in 0 until binding.corazones.listaCorazones.childCount){
-            (binding.corazones.listaCorazones[i] as TextView).setTextColor( colorPorDefectoCorazones )
-        }
-    }
-
-    private fun borrarSeleccion(){
-        for ( i in 0 until binding.estrellas.lista.childCount){
-            (binding.estrellas.lista[i] as TextView).setTextColor( colorPorDefecto )
         }
     }
 
-    companion object{
+    private fun borrarSeleccionCorazones() {
+        (binding.corazones.listaCorazones[1] as TextView).setTextColor(colorPorDefectoCorazones)
+    }
 
-        fun newInstance(codigoLugar:Int):ComentariosFragment{
+    private fun borrarSeleccion() {
+        for (i in 0 until binding.estrellas.lista.childCount) {
+            (binding.estrellas.lista[i] as TextView).setTextColor(colorPorDefecto)
+        }
+    }
+
+    companion object {
+
+        fun newInstance(codigoLugar: String): ComentariosFragment {
             val args = Bundle()
-            args.putInt("id_lugar", codigoLugar)
+            args.putString("id_lugar", codigoLugar)
             val fragmento = ComentariosFragment()
             fragmento.arguments = args
             return fragmento

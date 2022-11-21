@@ -8,11 +8,14 @@ import android.widget.Toast
 import com.android.busimap.R
 import com.android.busimap.bd.Personas
 import com.android.busimap.databinding.ActivityLoginBinding
-import com.android.busimap.modelo.Administrador
-import com.android.busimap.modelo.Moderador
+import com.android.busimap.modelo.Rol
 import com.android.busimap.modelo.Usuario
 import com.android.busimap.sqlite.BusimapDbHelper
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
 
@@ -22,22 +25,13 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val sp = getSharedPreferences("sesion", Context.MODE_PRIVATE)
+
         db = BusimapDbHelper(this)
 
-        val correo = sp.getString("correo_usuario", "")
-        val tipo = sp.getString("tipo_usuario", "")
+        var user = FirebaseAuth.getInstance().currentUser
 
-        if (correo!!.isNotEmpty() && tipo!!.isNotEmpty()) {
-
-            when (tipo) {
-                "usuario" -> startActivity(Intent(this, HomeActivity::class.java))
-                "moderador" -> startActivity(Intent(this, HomeActivityModerador::class.java))
-                "admin" -> startActivity(Intent(this, AdministradorActivity::class.java))
-            }
-
-            finish()
-
+        if (user != null) {
+            hacerRedireccion(user)
         } else {
 
             binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -77,53 +71,58 @@ class LoginActivity : AppCompatActivity() {
         }
 
         if (correo.isNotEmpty() && password.isNotEmpty()) {
+            FirebaseAuth.getInstance()
+                .signInWithEmailAndPassword(correo.toString(), password.toString())
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        var user = FirebaseAuth.getInstance().currentUser
 
-            try {
-
-                val persona = Personas.login(correo.toString(), password.toString())
-
-                if (persona != null) {
-
-                    val tipo =
-                        if (persona is Usuario) "usuario" else if (persona is Moderador) "moderador" else "admin"
-
-                    val sharedPreferences =
-                        this.getSharedPreferences("sesion", Context.MODE_PRIVATE).edit()
-                    sharedPreferences.putInt("codigo_usuario", persona.id)
-                    sharedPreferences.putString("correo_usuario", persona.correo)
-                    sharedPreferences.putString("tipo_usuario", tipo)
-
-                    sharedPreferences.commit()
-
-                    when (persona) {
-                        is Usuario -> startActivity(Intent(this, HomeActivity::class.java))
-                        is Moderador -> startActivity(
-                            Intent(
-                                this,
-                                HomeActivityModerador::class.java
-                            )
-                        )
-                        is Administrador -> startActivity(
-                            Intent(
-                                this,
-                                AdministradorActivity::class.java
-                            )
-                        )
+                        if (user != null) {
+                            hacerRedireccion(user)
+                        } else {
+                            Snackbar.make(
+                                binding.root,
+                                "Este usuario no esta registrado!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    } else {
+                        Snackbar.make(
+                            binding.root,
+                            "No se ha podido iniciar sesion",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-                } else {
-                    Toast.makeText(this, getString(R.string.datos_incorrectos), Toast.LENGTH_LONG)
-                        .show()
                 }
+                .addOnFailureListener {
 
-
-            } catch (e: Exception) {
-                Toast.makeText(this, getString(R.string.datos_incorrectos), Toast.LENGTH_LONG)
-                    .show()
-            }
-
+                }
         }
-
     }
 
+    fun hacerRedireccion(user: FirebaseUser) {
+        Firebase.firestore
+            .collection("usuarios")
+            .document(user.uid)
+            .get()
+            .addOnSuccessListener { u ->
+
+                val rol = u.toObject(Usuario::class.java)?.rol
+                var intent: Intent
+
+                if (rol == Rol.CLIENTE) {
+                    intent = Intent(this, HomeActivity::class.java)
+                } else if (rol == Rol.MODERADOR) {
+                    intent = Intent(this, HomeActivityModerador::class.java)
+                } else {
+                    intent = Intent(this, AdministradorActivity::class.java)
+                }
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+                finish()
+
+            }
+    }
 
 }

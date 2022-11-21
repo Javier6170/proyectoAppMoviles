@@ -8,8 +8,12 @@ import com.android.busimap.adapter.LugarAdapter
 import com.android.busimap.bd.Lugares
 import com.android.busimap.databinding.ActivityResultadoBusquedaBinding
 import com.android.busimap.fragmentos.InicioFragment
+import com.android.busimap.modelo.Categoria
+import com.android.busimap.modelo.EstadoLugar
 
 import com.android.busimap.modelo.Lugar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ResultadoBusqueda : AppCompatActivity() {
 
@@ -28,16 +32,33 @@ class ResultadoBusqueda : AppCompatActivity() {
         listaLugares = ArrayList()
 
         if(textoBusqueda.isNotEmpty()){
-            listaLugares = Lugares.buscarNombre(textoBusqueda)
+
+            Firebase.firestore
+                .collection("lugares")
+                .whereEqualTo("nombre",textoBusqueda)
+                .get()
+                .addOnSuccessListener {
+                    for (doc in it){
+                        val lugar = doc.toObject(Lugar::class.java)
+                        lugar.key = doc.id
+                        listaLugares.add(lugar)
+
+                        supportFragmentManager.beginTransaction()
+                            .replace(binding.contenidoPrincipal.id, InicioFragment())
+                            .addToBackStack("Inicio fragment")
+                            .commit()
+
+                        val adapter = LugarAdapter(listaLugares)
+                        binding.listaLugares.adapter = adapter
+                        binding.listaLugares.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+
+                        adapter.notifyItemInserted(listaLugares.size-1)
+                    }
+                }
         }
-
-        supportFragmentManager.beginTransaction()
-            .replace(binding.contenidoPrincipal.id, InicioFragment())
-            .addToBackStack("Inicio fragment")
-            .commit()
-
-        val adapter = LugarAdapter(listaLugares)
-        binding.listaLugares.adapter = adapter
-        binding.listaLugares.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     }
+
+
+
 }

@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:text="Procesando información"
@@ -61,157 +61,212 @@
     </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_marginTop="150dp"
+            android:id="@+id/linearInfoNegocio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/linearInfoNegocio"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="130dp"
-                android:orientation="vertical">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nombre_layout"
+                style="@style/til_form">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/nombre_layout"
-                    style="@style/til_form">
-
-                    <EditText
-                        android:id="@+id/nombre_lugar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/fondo_forms"
-                        android:hint="@string/txt_nombre_lugar" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/descripcion_layout"
-                    style="@style/til_form">
-
-                    <EditText
-                        android:id="@+id/descripcion_lugar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/fondo_forms"
-                        android:gravity="left"
-                        android:hint="@string/txt_descripcion_lugar"
-                        android:lines="8" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/direccion_layout"
-                    style="@style/til_form">
-
-                    <EditText
-                        android:id="@+id/direccion_lugar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/fondo_forms"
-                        android:hint="@string/btn_direccion_lugar" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Spinner
-                    android:id="@+id/ciudad_lugar"
-                    style="@style/spinner_form" />
-
-                <Spinner
-                    android:id="@+id/categoria_lugar"
-                    style="@style/spinner_form" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/telefono_layout"
-                    style="@style/til_form">
-
-                    <EditText
-                        android:id="@+id/telefono_lugar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/fondo_forms"
-                        android:hint="@string/txt_telefono_lugar"
-                        android:inputType="phone" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/linearOrganizarHorarios"
-                android:layout_marginTop="130dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/btn_mostrar_horario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Añadir horario" />
-
-                <LinearLayout
-                    android:id="@+id/espacio_horarios"
+                <EditText
+                    android:id="@+id/nombre_lugar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="35dp"
-                    android:layout_marginEnd="35dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:background="@drawable/fondo_forms"
+                    android:hint="@string/txt_nombre_lugar" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="@string/lista_de_horario"
-                        android:textSize="17sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <LinearLayout
-                        android:id="@+id/lista_horarios"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/descripcion_layout"
+                style="@style/til_form">
 
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearAdministrarMapa"
-                android:layout_marginTop="130dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <fragment
-                    android:id="@+id/mapa_crear_lugar"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                <EditText
+                    android:id="@+id/descripcion_lugar"
                     android:layout_width="match_parent"
-                    android:layout_height="500dp"
-                    android:layout_marginStart="35dp"
-                    android:layout_marginEnd="35dp" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fondo_forms"
+                    android:gravity="left"
+                    android:hint="@string/txt_descripcion_lugar"
+                    android:lines="8" />
 
-            </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/direccion_layout"
+                style="@style/til_form">
+
+                <EditText
+                    android:id="@+id/direccion_lugar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fondo_forms"
+                    android:hint="@string/btn_direccion_lugar" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/ciudad_lugar"
+                style="@style/spinner_form" />
+
+            <Spinner
+                android:id="@+id/categoria_lugar"
+                style="@style/spinner_form" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/telefono_layout"
+                style="@style/til_form">
+
+                <EditText
+                    android:id="@+id/telefono_lugar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fondo_forms"
+                    android:hint="@string/txt_telefono_lugar"
+                    android:inputType="phone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearSeleccionarImagen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/grayO"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginStart="35dp"/>
+        <TextView
+            style="@style/til_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seleccion de imagenes"
+            android:layout_marginEnd="35dp"
+            android:layout_marginStart="35dp"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <Button
+                android:id="@+id/btn_sel_archivo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar archivo"
+                android:layout_marginEnd="5dp"
+                />
+            <Button
+                android:id="@+id/btn_tomar_foto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tomar foto"
+                android:layout_marginStart="5dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/imagenes_seleccionadas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearOrganizarHorarios"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="130dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_mostrar_horario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Añadir horario" />
+
+        <LinearLayout
+            android:id="@+id/espacio_horarios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/lista_de_horario"
+                android:textSize="17sp" />
 
             <LinearLayout
-                android:id="@+id/linearGuardarInformacion"
+                android:id="@+id/lista_horarios"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btn_crear_lugar"
-                    android:layout_width="210dp"
-                    android:layout_height="60dp"
-                    android:text="@string/btn_crear_lugar" />
             </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearAdministrarMapa"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="130dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/mapa_crear_lugar"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearGuardarInformacion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_crear_lugar"
+            android:layout_width="210dp"
+            android:layout_height="60dp"
+            android:text="@string/btn_crear_lugar" />
+    </LinearLayout>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

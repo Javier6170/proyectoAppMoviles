@@ -7,11 +7,10 @@
     android:orientation="vertical"
     tools:context=".activities.DetalleLugarActivity">
 
-    <ImageView
-        android:id="@+id/imagen_lugar"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/lista_imagenes"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:src="@color/cardview_dark_background" />
+        android:layout_height="230dp"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

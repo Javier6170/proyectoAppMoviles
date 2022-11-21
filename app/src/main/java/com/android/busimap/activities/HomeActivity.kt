@@ -20,6 +20,7 @@ import com.android.busimap.databinding.ActivityHomeBinding
 
 
 import com.android.busimap.fragmentos.*
+import com.android.busimap.modelo.Usuario
 import com.android.busimap.sqlite.BusimapDbHelper
 import com.android.busimap.util.EstadoConexion
 import com.android.busimap.util.Idioma
@@ -29,6 +30,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     OnMapReadyCallback {
@@ -42,9 +47,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var MENU_AYUDA = "ayuda"
     private lateinit var binding: ActivityHomeBinding
     private lateinit var mMap: GoogleMap
-    private lateinit var sh:SharedPreferences
     private lateinit var db: BusimapDbHelper
-    var estadoConexion: Boolean=false
+    var estadoConexion: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,19 +66,22 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.btnLogout.setOnClickListener { cerrarSesion() }
 
 
+        val encabezado = binding.navigationView.getHeaderView(0)
 
-        sh = getSharedPreferences("sesion", Context.MODE_PRIVATE)
+        var user = FirebaseAuth.getInstance().currentUser
 
-        val codigoUsuario = sh.getInt("codigo_usuario", 0)
-
-        if( codigoUsuario != 0 ){
-
-            val usuario = Usuarios.obtener(codigoUsuario)
-            val encabezado = binding.navigationView.getHeaderView(0)
-
-            //encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = usuario!!.nombre
-            //encabezado.findViewById<TextView>(R.id.txt_nickUser).text = usuario!!.correo
+        if (user != null) {
+            encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = user.email
+            Firebase.firestore
+                .collection("usuarios")
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener { u ->
+                    val nickname = u.toObject(Usuario::class.java)?.nickname
+                    encabezado.findViewById<TextView>(R.id.txt_nickUser).text = nickname
+                }
         }
+
 
         reemplazarFragmento(1, MENU_INICIO)
         binding.navigationView.setNavigationItemSelectedListener(this)
@@ -126,11 +133,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun cerrarSesion() {
-        val sh = getSharedPreferences("sesion", Context.MODE_PRIVATE).edit()
-        sh.clear()
-        sh.commit()
-        finish()
-        startActivity(Intent(this, LoginActivity::class.java))
+        Firebase.auth.signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        this.startActivity(intent)
+        this.finish()
+
     }
 
 
@@ -174,8 +181,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
-    fun cambiarIdioma()
-    {
+    fun cambiarIdioma() {
         val intent = intent
         if (intent != null) {
             intent.flags = (Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -184,18 +190,20 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
     }
+
     override fun attachBaseContext(newBase: Context?) {
         val localeUpdatedContext: ContextWrapper? = Idioma.cambiarIdioma(newBase!!)
         super.attachBaseContext(localeUpdatedContext)
     }
 
-    fun comprobarConexionInternet(){
-        val conectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    fun comprobarConexionInternet() {
+        val conectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         conectivityManager.registerDefaultNetworkCallback(EstadoConexion(::comprobarConexion))
     }
 
-    fun comprobarConexion(estado: Boolean){
-        estadoConexion=estado
+    fun comprobarConexion(estado: Boolean) {
+        estadoConexion = estado
         Log.e("ESTADO CONEXION", estadoConexion.toString())
     }
 

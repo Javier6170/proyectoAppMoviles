@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat
 import com.android.busimap.R
 import com.android.busimap.activities.DetalleLugarActivity
 import com.android.busimap.activities.HomeActivity
-import com.android.busimap.bd.Lugares
+import com.android.busimap.bd.*
 import com.android.busimap.databinding.FragmentMapaBinding
 import com.android.busimap.databinding.FragmentMisNegociosBinding
 import com.android.busimap.modelo.EstadoLugar
@@ -29,6 +29,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class MapaFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -96,21 +98,33 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
         val estado = (requireActivity() as HomeActivity).estadoConexion
 
         if (estado) {
+            val categorias = Categorias
+
+            categorias.listar().forEach {
+                Firebase.firestore.collection("categorias")
+                    .add(it)
+                    .addOnSuccessListener {  }
+            }
+
+
             Lugares.listarPorEstado(EstadoLugar.ACEPTADO).forEach {
                 gMap.addMarker(
                     MarkerOptions().position(LatLng(it.posicion.lat, it.posicion.lng))
                         .title(it.nombre).visible(true)
-                )!!.tag = it.id
+                )!!.tag = it.key
                 bd.crearLugar(it)
             }
 
         }else{
+            /*
             bd.listarLugares().forEach {
                 gMap.addMarker(
                     MarkerOptions().position(LatLng(it.posicion.lat, it.posicion.lng))
                         .title(it.nombre).visible(true)
-                )!!.tag = it.id
+                )!!.tag = it.key
             }
+
+             */
         }
 
         gMap.setOnInfoWindowClickListener { this }

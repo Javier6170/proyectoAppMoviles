@@ -10,16 +10,17 @@ import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.android.busimap.R
-import com.android.busimap.bd.Administradores
-import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.ActivityAdministradorBinding
-import com.android.busimap.databinding.ActivityHomeModeradorBinding
 import com.android.busimap.fragmentos.*
+import com.android.busimap.modelo.Usuario
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class AdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var sh: SharedPreferences
     lateinit var binding: ActivityAdministradorBinding
     private var MENU_INICIO = "inicio"
     private var MENU_CREAR_MODE = "crear_moderador"
@@ -33,17 +34,24 @@ class AdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        sh = getSharedPreferences("sesion", Context.MODE_PRIVATE)
 
-        val codigoUsuario = sh.getInt("codigo_usuario", 0)
 
-        if( codigoUsuario != 0 ){
-            val usuario = Administradores.obtener(codigoUsuario)
-            val encabezado = binding.navigationView.getHeaderView(0)
 
-            encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = usuario!!.nombre
-            encabezado.findViewById<TextView>(R.id.txt_nickUser).text = usuario!!.correo
+        var user = FirebaseAuth.getInstance().currentUser
+        val encabezado = binding.navigationView.getHeaderView(0)
+
+        if (user != null) {
+            encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = user.email
+            Firebase.firestore
+                .collection("usuarios")
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener { u ->
+                    val nickname = u.toObject(Usuario::class.java)?.nickname
+                    encabezado.findViewById<TextView>(R.id.txt_nickUser).text = nickname
+                }
         }
+
         reemplazarFragmento(1, MENU_INICIO)
         binding.navigationView.setNavigationItemSelectedListener(this)
 
@@ -53,11 +61,10 @@ class AdministradorActivity : AppCompatActivity(), NavigationView.OnNavigationIt
     }
 
     fun cerrarSesion() {
-        val sh = getSharedPreferences("sesion", Context.MODE_PRIVATE).edit()
-        sh.clear()
-        sh.commit()
-        finish()
-        startActivity(Intent(this, LoginActivity::class.java))
+        Firebase.auth.signOut()
+        val intent = Intent(this, LoginActivity::class.java)
+        this.startActivity(intent)
+        this.finish()
     }
 
     fun abrirMenu() {

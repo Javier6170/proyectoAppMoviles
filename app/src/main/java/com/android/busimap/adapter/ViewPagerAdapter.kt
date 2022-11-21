@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.android.busimap.fragmentos.ComentariosFragment
 import com.android.busimap.fragmentos.InfoLugarFragment
 
-class ViewPagerAdapter(var fragment:FragmentActivity, private var codigoLugar:Int): FragmentStateAdapter(fragment) {
+class ViewPagerAdapter(var fragment:FragmentActivity, private var codigoLugar:String): FragmentStateAdapter(fragment) {
     override fun getItemCount() = 2
 
     override fun createFragment(position: Int): Fragment {

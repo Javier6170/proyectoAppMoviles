@@ -32,11 +32,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lista_mis_lugares"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="100dp"/>
+            android:layout_marginTop="100dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_nuevo_lugar"

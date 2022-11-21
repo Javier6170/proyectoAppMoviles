@@ -20,6 +20,10 @@ import com.android.busimap.databinding.FragmentListaLugaresModeradorBinding
 import com.android.busimap.modelo.EstadoLugar
 import com.android.busimap.modelo.Lugar
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.ktx.Firebase
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
@@ -28,10 +32,17 @@ class ListaLugaresModeradorFragment : Fragment() {
     lateinit var binding: FragmentListaLugaresModeradorBinding
     lateinit var adapterLista: LugarAdapter
     lateinit var listaLugares: ArrayList<Lugar>
+    var lugar: Lugar = Lugar()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        listaLugares = Lugares.listarPorEstado(EstadoLugar.SIN_REVISAR)
+
+        Firebase.firestore
+            .collection("lugares")
+            .get()
+            .addOnSuccessListener {
+                listaLugares = it.toObjects(Lugar::class.java) as ArrayList<Lugar>
+            }
 
     }
 
@@ -42,115 +53,145 @@ class ListaLugaresModeradorFragment : Fragment() {
     ): View? {
         binding = FragmentListaLugaresModeradorBinding.inflate(inflater, container, false)
 
-            adapterLista = LugarAdapter(listaLugares)
-            binding.listaLugares.adapter = adapterLista
-            binding.listaLugares.layoutManager =
-                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        adapterLista = LugarAdapter(listaLugares)
+        binding.listaLugares.adapter = adapterLista
+        binding.listaLugares.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-            val simpleCallback: ItemTouchHelper.SimpleCallback = object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
+        val simpleCallback: ItemTouchHelper.SimpleCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
 
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    var pos = viewHolder.adapterPosition
-                    val codigoLugar = listaLugares[pos].id
-                    val lugar = Lugares.obtener(codigoLugar)
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                var pos = viewHolder.adapterPosition
+                val codigoLugar = listaLugares[pos].key
 
-                    when (direction) {
 
-                        ItemTouchHelper.LEFT -> {
+                Firebase.firestore
+                    .collection("lugares")
+                    .document(codigoLugar)
+                    .get()
+                    .addOnSuccessListener {
+                        lugar = it.toObject(Lugar::class.java)!!
+                    }
 
-                            Lugares.cambiarEstado(codigoLugar, EstadoLugar.ACEPTADO)
-                            listaLugares.remove(lugar)
-                            adapterLista.notifyItemRemoved(pos)
+                when (direction) {
+                    ItemTouchHelper.LEFT -> {
 
-                            Snackbar.make(binding.listaLugares, "Lugar aceptado!", Snackbar.LENGTH_LONG)
-                                .setAction("Deshacer", View.OnClickListener {
-                                    Lugares.cambiarEstado(codigoLugar, EstadoLugar.SIN_REVISAR)
-                                    listaLugares.add(pos, lugar!!)
-                                    adapterLista.notifyItemInserted(pos)
-                                }).show()
-                        }
-                        ItemTouchHelper.RIGHT -> {
+                        Firebase.firestore
+                            .collection("lugares")
+                            .document(codigoLugar)
+                            .update("estado", EstadoLugar.ACEPTADO)
+                            .addOnSuccessListener {
+                                adapterLista.notifyItemRemoved(pos)
+                                Snackbar.make(
+                                    binding.listaLugares,
+                                    "Lugar aceptado!",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                    .setAction("Deshacer", View.OnClickListener {
+                                        Firebase.firestore
+                                            .collection("lugares")
+                                            .document(codigoLugar)
+                                            .update("estado", EstadoLugar.SIN_REVISAR)
+                                            .addOnSuccessListener {
+                                                listaLugares.add(pos, lugar!!)
+                                                adapterLista.notifyItemInserted(pos)
+                                            }
+                                    }).show()
+                            }
+                    }
+                    ItemTouchHelper.RIGHT -> {
 
-                            Lugares.cambiarEstado(codigoLugar, EstadoLugar.RECHAZADO)
-                            listaLugares.remove(lugar)
-                            adapterLista.notifyItemRemoved(pos)
+                        Firebase.firestore
+                            .collection("lugares")
+                            .document(codigoLugar)
+                            .update("estado", EstadoLugar.RECHAZADO)
+                            .addOnSuccessListener {
+                                adapterLista.notifyItemRemoved(pos)
+                                Snackbar.make(
+                                    binding.listaLugares,
+                                    "Lugar rechazado!",
+                                    Snackbar.LENGTH_LONG
+                                )
+                                    .setAction("Deshacer", View.OnClickListener {
+                                        Firebase.firestore
+                                            .collection("lugares")
+                                            .document(codigoLugar)
+                                            .update("estado", EstadoLugar.SIN_REVISAR)
+                                            .addOnSuccessListener {
+                                                listaLugares.add(pos, lugar!!)
+                                                adapterLista.notifyItemInserted(pos)
+                                            }
+                                        listaLugares.add(pos, lugar!!)
+                                        adapterLista.notifyItemInserted(pos)
+                                    }).show()
+                            }
 
-                            Snackbar.make(
-                                binding.listaLugares,
-                                "Lugar rechazado!",
-                                Snackbar.LENGTH_LONG
-                            )
-                                .setAction("Deshacer", View.OnClickListener {
-                                    Lugares.cambiarEstado(codigoLugar, EstadoLugar.SIN_REVISAR)
-                                    listaLugares.add(pos, lugar!!)
-                                    adapterLista.notifyItemInserted(pos)
-                                }).show()
-                        }
 
                     }
 
                 }
 
-                override fun onChildDraw(
-                    c: Canvas,
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    dX: Float,
-                    dY: Float,
-                    actionState: Int,
-                    isCurrentlyActive: Boolean
-                ) {
-                    super.onChildDraw(
-                        c,
-                        recyclerView,
-                        viewHolder,
-                        dX,
-                        dY,
-                        actionState,
-                        isCurrentlyActive
-                    )
-
-                    RecyclerViewSwipeDecorator.Builder(
-                        c,
-                        recyclerView,
-                        viewHolder,
-                        dX,
-                        dY,
-                        actionState,
-                        isCurrentlyActive
-                    )
-                        .addSwipeLeftBackgroundColor(
-                            ContextCompat.getColor(
-                                activity!!.baseContext,
-                                R.color.color_green_light
-                            )
-                        )
-                        .addSwipeRightBackgroundColor(
-                            ContextCompat.getColor(
-                                activity!!.baseContext,
-                                R.color.red
-                            )
-                        )
-                        .addSwipeLeftLabel("Acceptor")
-                        .addSwipeRightLabel("Rechazar")
-                        .create()
-                        .decorate()
-
-
-                }
 
             }
 
-            val itemTouchHelper = ItemTouchHelper(simpleCallback)
-            itemTouchHelper.attachToRecyclerView(binding.listaLugares)
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                    .addSwipeLeftBackgroundColor(
+                        ContextCompat.getColor(
+                            activity!!.baseContext,
+                            R.color.color_green_light
+                        )
+                    )
+                    .addSwipeRightBackgroundColor(
+                        ContextCompat.getColor(
+                            activity!!.baseContext,
+                            R.color.red
+                        )
+                    )
+                    .addSwipeLeftLabel("Acceptor")
+                    .addSwipeRightLabel("Rechazar")
+                    .create()
+                    .decorate()
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+        itemTouchHelper.attachToRecyclerView(binding.listaLugares)
 
 
 

@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:paddingBottom="20dp"
-        android:layout_below="@id/imagen_lugar"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -46,6 +45,9 @@
                 android:fontFamily="@font/font_awesome_solid_900"  />
 
         </RelativeLayout>
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

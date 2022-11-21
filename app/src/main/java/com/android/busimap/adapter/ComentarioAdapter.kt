@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.busimap.bd.Usuarios
 import com.android.busimap.databinding.ItemComentarioBinding
 import com.android.busimap.modelo.Comentario
+import com.android.busimap.modelo.Usuario
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 
 class ComentarioAdapter(private var lista:ArrayList<Comentario>): RecyclerView.Adapter<ComentarioAdapter.ViewHolder>() {
@@ -24,9 +27,16 @@ class ComentarioAdapter(private var lista:ArrayList<Comentario>): RecyclerView.A
         RecyclerView.ViewHolder(view.root) {
 
         fun bind(comentario: Comentario) {
+            Firebase.firestore
+                .collection("usuarios")
+                .document(comentario.idUsuario)
+                .get()
+                .addOnSuccessListener {
 
-            view.txtComentario.text = comentario.texto
-            view.txtUsuario.text = Usuarios.obtener(comentario.idUsuario)!!.nombre
+                    view.txtComentario.text = comentario.texto
+                    view.txtUsuario.text = it.toObject(Usuario::class.java)?.nombre
+
+                }
 
             val sdf = SimpleDateFormat("dd-MM-YYYY")
 
