@@ -20,6 +20,7 @@ import com.android.busimap.bd.*
 import com.android.busimap.databinding.FragmentMapaBinding
 import com.android.busimap.databinding.FragmentMisNegociosBinding
 import com.android.busimap.modelo.EstadoLugar
+import com.android.busimap.modelo.Lugar
 import com.android.busimap.sqlite.BusimapDbHelper
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -41,6 +42,7 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
     private var tienePermiso = false
     private val defaultLocation = LatLng(4.550923, -75.6557201)
     private lateinit var permissionResultCallBack: ActivityResultLauncher<String>
+    var listaLugares: ArrayList<Lugar> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,24 +109,37 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
             }
 
 
+
+            Firebase.firestore
+                .collection("lugares")
+                .whereEqualTo("estado","ACEPTADO")
+                .get()
+                .addOnSuccessListener {
+                    for (doc in it){
+                        val lugar = doc.toObject(Lugar::class.java)
+                        lugar.key = doc.id
+                        gMap.addMarker(
+                            MarkerOptions().position(LatLng(lugar.posicion.lat, lugar.posicion.lng))
+                                .title(lugar.nombre).visible(true)
+                        )!!.tag = lugar.key
+                        listaLugares.add(lugar)
+                    }
+
+                }
+
             Lugares.listarPorEstado(EstadoLugar.ACEPTADO).forEach {
-                gMap.addMarker(
-                    MarkerOptions().position(LatLng(it.posicion.lat, it.posicion.lng))
-                        .title(it.nombre).visible(true)
-                )!!.tag = it.key
+
                 bd.crearLugar(it)
             }
 
         }else{
-            /*
-            bd.listarLugares().forEach {
+            listaLugares.forEach {
                 gMap.addMarker(
                     MarkerOptions().position(LatLng(it.posicion.lat, it.posicion.lng))
                         .title(it.nombre).visible(true)
                 )!!.tag = it.key
             }
 
-             */
         }
 
         gMap.setOnInfoWindowClickListener { this }

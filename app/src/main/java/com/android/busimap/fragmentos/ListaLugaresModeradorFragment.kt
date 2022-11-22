@@ -1,5 +1,6 @@
 package com.android.busimap.fragmentos
 
+import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,15 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.busimap.R
 import com.android.busimap.adapter.LugarAdapter
-import com.android.busimap.bd.Lugares
-import com.android.busimap.databinding.FragmentComentariosBinding
 import com.android.busimap.databinding.FragmentListaLugaresModeradorBinding
-import com.android.busimap.modelo.EstadoLugar
 import com.android.busimap.modelo.Lugar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
@@ -31,18 +27,13 @@ class ListaLugaresModeradorFragment : Fragment() {
 
     lateinit var binding: FragmentListaLugaresModeradorBinding
     lateinit var adapterLista: LugarAdapter
-    lateinit var listaLugares: ArrayList<Lugar>
+    var listaLugares: ArrayList<Lugar> = ArrayList()
     var lugar: Lugar = Lugar()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Firebase.firestore
-            .collection("lugares")
-            .get()
-            .addOnSuccessListener {
-                listaLugares = it.toObjects(Lugar::class.java) as ArrayList<Lugar>
-            }
+
 
     }
 
@@ -53,10 +44,12 @@ class ListaLugaresModeradorFragment : Fragment() {
     ): View? {
         binding = FragmentListaLugaresModeradorBinding.inflate(inflater, container, false)
 
+
         adapterLista = LugarAdapter(listaLugares)
         binding.listaLugares.adapter = adapterLista
         binding.listaLugares.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+
 
         val simpleCallback: ItemTouchHelper.SimpleCallback = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -87,22 +80,25 @@ class ListaLugaresModeradorFragment : Fragment() {
                         Firebase.firestore
                             .collection("lugares")
                             .document(codigoLugar)
-                            .update("estado", EstadoLugar.ACEPTADO)
+                            .update("estado", "ACEPTADO")
                             .addOnSuccessListener {
                                 adapterLista.notifyItemRemoved(pos)
+                                adapterLista.notifyDataSetChanged()
+                                onResume()
                                 Snackbar.make(
                                     binding.listaLugares,
                                     "Lugar aceptado!",
                                     Snackbar.LENGTH_LONG
-                                )
-                                    .setAction("Deshacer", View.OnClickListener {
+                                ).setAction("Deshacer", View.OnClickListener {
                                         Firebase.firestore
                                             .collection("lugares")
                                             .document(codigoLugar)
-                                            .update("estado", EstadoLugar.SIN_REVISAR)
+                                            .update("estado", "SIN_REVISAR")
                                             .addOnSuccessListener {
                                                 listaLugares.add(pos, lugar!!)
                                                 adapterLista.notifyItemInserted(pos)
+                                                adapterLista.notifyDataSetChanged()
+                                                onResume()
                                             }
                                     }).show()
                             }
@@ -112,22 +108,25 @@ class ListaLugaresModeradorFragment : Fragment() {
                         Firebase.firestore
                             .collection("lugares")
                             .document(codigoLugar)
-                            .update("estado", EstadoLugar.RECHAZADO)
+                            .update("estado", "RECHAZADO")
                             .addOnSuccessListener {
                                 adapterLista.notifyItemRemoved(pos)
+                                adapterLista.notifyDataSetChanged()
+                                onResume()
                                 Snackbar.make(
                                     binding.listaLugares,
                                     "Lugar rechazado!",
                                     Snackbar.LENGTH_LONG
-                                )
-                                    .setAction("Deshacer", View.OnClickListener {
+                                ).setAction("Deshacer", View.OnClickListener {
                                         Firebase.firestore
                                             .collection("lugares")
                                             .document(codigoLugar)
-                                            .update("estado", EstadoLugar.SIN_REVISAR)
+                                            .update("estado", "SIN_REVISAR")
                                             .addOnSuccessListener {
                                                 listaLugares.add(pos, lugar!!)
                                                 adapterLista.notifyItemInserted(pos)
+                                                adapterLista.notifyDataSetChanged()
+                                                onResume()
                                             }
                                         listaLugares.add(pos, lugar!!)
                                         adapterLista.notifyItemInserted(pos)
@@ -196,6 +195,23 @@ class ListaLugaresModeradorFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onResume(){
+        super.onResume()
+        listaLugares.clear()
+        Firebase.firestore
+            .collection("lugares")
+            .whereEqualTo("estado","SIN_REVISAR")
+            .get()
+            .addOnSuccessListener {
+                for (doc in it){
+                    val lugar = doc.toObject(Lugar::class.java)
+                    lugar.key = doc.id
+                    listaLugares.add(lugar)
+                }
+                adapterLista.notifyDataSetChanged()
+            }
     }
 
     companion object {

@@ -3,8 +3,6 @@ package com.android.busimap.modelo
 import android.content.ContentValues
 import com.android.busimap.activities.Posicion
 import com.android.busimap.sqlite.LugarContrato
-import com.android.busimap.sqlite.UsuarioContrato
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -177,7 +175,7 @@ class Lugar() {
     fun toContentValues(): ContentValues {
 
         val values = ContentValues()
-        //values.put(LugarContrato.ID, id)
+        values.put(LugarContrato.ID, key)
         values.put(LugarContrato.NOMBRE, nombre)
         values.put(LugarContrato.DESCRIPCION, descripcion)
         values.put(LugarContrato.LAT, posicion.lat)

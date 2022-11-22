@@ -12,6 +12,7 @@ import com.android.busimap.modelo.Categoria
 import com.android.busimap.modelo.EstadoLugar
 
 import com.android.busimap.modelo.Lugar
+import com.android.busimap.sqlite.BusimapDbHelper
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -20,6 +21,7 @@ class ResultadoBusqueda : AppCompatActivity() {
     lateinit var binding:ActivityResultadoBusquedaBinding
     var textoBusqueda:String = ""
     lateinit var listaLugares:ArrayList<Lugar>
+    private lateinit var db: BusimapDbHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +30,13 @@ class ResultadoBusqueda : AppCompatActivity() {
         binding = ActivityResultadoBusquedaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        db = BusimapDbHelper(this)
+
+
+
         textoBusqueda = intent.extras!!.getString("texto", "")
         listaLugares = ArrayList()
+
 
         if(textoBusqueda.isNotEmpty()){
 

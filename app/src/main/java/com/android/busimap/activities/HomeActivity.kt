@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.GravityCompat
@@ -24,6 +26,7 @@ import com.android.busimap.modelo.Usuario
 import com.android.busimap.sqlite.BusimapDbHelper
 import com.android.busimap.util.EstadoConexion
 import com.android.busimap.util.Idioma
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -41,13 +44,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var MENU_INICIO = "inicio"
     private var MENU_MIS_LUGARES = "mis_lugares"
     private var MENU_FAVORITOS = "favoritos"
-    private var MENU_NOTIFICACIONES = "notifiaciones"
     private var MENU_CONFIGURACIONES = "configuraciones"
     private var MAPA = "mapa"
-    private var MENU_AYUDA = "ayuda"
     private lateinit var binding: ActivityHomeBinding
     private lateinit var mMap: GoogleMap
-    private lateinit var db: BusimapDbHelper
+
     var estadoConexion: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +60,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener(this)
-        db = BusimapDbHelper(this)
+
 
         binding.btnMenu.setOnClickListener { abrirMenu() }
         binding.btnCrearNegocio.setOnClickListener { abrirCrearNegocio() }
@@ -70,7 +71,26 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         var user = FirebaseAuth.getInstance().currentUser
 
+
+
         if (user != null) {
+
+            Firebase.firestore.collection("usuarios")
+                .document(user!!.uid)
+                .get()
+                .addOnSuccessListener {
+                    val userF = it.toObject(Usuario::class.java)
+
+                    var imagen = userF!!.imagenUser
+
+                    if (imagen!="" || imagen == null){
+                        Glide.with(binding.root.context)
+                            .load(imagen)
+                            .into(encabezado.findViewById(R.id.imagenUser))
+
+                    }
+                }
+
             encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = user.email
             Firebase.firestore
                 .collection("usuarios")
@@ -100,10 +120,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             1 -> InicioFragment()
             2 -> MisNegociosFragment()
             3 -> FavoritosFragment()
-            4 -> NotificacionsFragment()
-            5 -> ConfiguracionesFragment()
-            6 -> AyudaFragment()
-            else -> AyudaFragment()
+            4 -> ConfiguracionesFragment()
+            else -> InicioFragment()
         }
 
 
@@ -120,13 +138,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (count > 0) {
             val nombre = supportFragmentManager.getBackStackEntryAt(count - 1).name
             when (nombre) {
-                MENU_INICIO -> binding.navigationView.menu.getItem(0).isChecked = true
-                MENU_MIS_LUGARES -> binding.navigationView.menu.getItem(1).isChecked = true
-                MENU_FAVORITOS -> binding.navigationView.menu.getItem(2).isChecked = true
-                MENU_NOTIFICACIONES -> binding.navigationView.menu.getItem(3).isChecked = true
+                MENU_INICIO -> binding.navigationView.menu.getItem(1).isChecked = true
+                MENU_MIS_LUGARES -> binding.navigationView.menu.getItem(2).isChecked = true
+                MENU_FAVORITOS -> binding.navigationView.menu.getItem(3).isChecked = true
                 MENU_CONFIGURACIONES -> binding.navigationView.menu.getItem(4).isChecked = true
-                MENU_AYUDA -> binding.navigationView.menu.getItem(5).isChecked = true
-                else -> binding.navigationView.menu.getItem(6).isChecked = true
+                else -> binding.navigationView.menu.getItem(1).isChecked = true
             }
         }
 
@@ -164,9 +180,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.navHome -> reemplazarFragmento(1, MENU_INICIO)
             R.id.navMisNegocios -> reemplazarFragmento(2, MENU_MIS_LUGARES)
             R.id.navFavoritos -> reemplazarFragmento(3, MENU_FAVORITOS)
-            R.id.navNotificaciones -> reemplazarFragmento(4, MENU_NOTIFICACIONES)
-            R.id.navConfiguracion -> reemplazarFragmento(5, MENU_CONFIGURACIONES)
-            R.id.navAyuda -> reemplazarFragmento(6, MENU_AYUDA)
+            R.id.navConfiguracion -> reemplazarFragmento(4, MENU_CONFIGURACIONES)
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true

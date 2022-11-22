@@ -1,7 +1,6 @@
 package com.android.busimap.modelo
 
 import android.content.ContentValues
-import com.android.busimap.sqlite.UsuarioContrato
 
 class Usuario() {
 
@@ -11,6 +10,7 @@ class Usuario() {
 
     var key: String = ""
     var uid: String = ""
+    var imagenUser: String = ""
     var rol: Rol? = Rol.CLIENTE
 
 
@@ -29,17 +29,6 @@ class Usuario() {
 
     override fun toString(): String {
         return "Usuario(nickname='$nickname') ${super.toString()}"
-    }
-
-    fun toContentValues(): ContentValues {
-
-        val values = ContentValues()
-        values.put(UsuarioContrato.NOMBRE, nombre)
-        values.put(UsuarioContrato.NICKNAME, nickname)
-        //values.put(UsuarioContrato.CORREO, correo)
-        //values.put(UsuarioContrato.PASSWORD, password)
-
-        return values
     }
 
 }

@@ -52,6 +52,8 @@ class CrearModeradorAdminFragment : Fragment() {
 
     fun registraModerador() {
 
+        setDialog(true)
+
         val nombre = binding.nombreUsuario.text
         val correo = binding.emailUsuario.text
         val password = binding.passwordUsuario.text
@@ -99,7 +101,7 @@ class CrearModeradorAdminFragment : Fragment() {
                                 val usuarioRegistro = Usuario(
                                     nombre.toString(),
                                     nombre.toString(),
-                                    Rol.CLIENTE
+                                    Rol.MODERADOR
                                 )
 
                                 Firebase.firestore
@@ -142,5 +144,7 @@ class CrearModeradorAdminFragment : Fragment() {
     private fun setDialog(show: Boolean) {
         if (show) dialog.show() else dialog.dismiss()
     }
+
+
 
 }

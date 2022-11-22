@@ -241,7 +241,7 @@ class ComentariosFragment : Fragment() {
     }
 
     private fun borrarSeleccionCorazones() {
-        (binding.corazones.listaCorazones[1] as TextView).setTextColor(colorPorDefectoCorazones)
+        (binding.corazones.listaCorazones[0] as TextView).setTextColor(colorPorDefectoCorazones)
     }
 
     private fun borrarSeleccion() {

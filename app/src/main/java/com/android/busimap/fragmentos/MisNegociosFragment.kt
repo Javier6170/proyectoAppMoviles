@@ -1,32 +1,21 @@
 package com.android.busimap.fragmentos
 
-import android.content.Context
+
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.busimap.R
-import com.android.busimap.activities.HomeActivity
 import com.android.busimap.activities.VistaCrearNegocio
 import com.android.busimap.adapter.LugarAdapter
-import com.android.busimap.bd.Lugares
 import com.android.busimap.databinding.FragmentMisNegociosBinding
 import com.android.busimap.modelo.Lugar
-import com.android.busimap.modelo.Usuario
 import com.android.busimap.sqlite.BusimapDbHelper
-import com.android.busimap.util.EstadoConexion
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 class MisNegociosFragment : Fragment() {
@@ -36,6 +25,7 @@ class MisNegociosFragment : Fragment() {
     var estadoConexion: Boolean=false
     lateinit var adapter:LugarAdapter
     var user: FirebaseUser?= null
+    private lateinit var db: BusimapDbHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +36,7 @@ class MisNegociosFragment : Fragment() {
 
         binding.btnNuevoLugar.setOnClickListener { irACrearLugar() }
 
+        db = BusimapDbHelper(requireActivity())
         user = FirebaseAuth.getInstance().currentUser
 
         if (user != null) {

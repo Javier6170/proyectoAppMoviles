@@ -13,16 +13,17 @@ import com.android.busimap.databinding.FragmentAceptadosModeradorBinding
 import com.android.busimap.databinding.FragmentDenegadosModeradorBinding
 import com.android.busimap.modelo.EstadoLugar
 import com.android.busimap.modelo.Lugar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class DenegadosModeradorFragment : Fragment() {
     lateinit var binding: FragmentDenegadosModeradorBinding
-    lateinit var listaLugares: ArrayList<Lugar>
+    var listaLugares: ArrayList<Lugar> = ArrayList()
     lateinit var adapterLista: LugarAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        listaLugares = Lugares.listarPorEstado(EstadoLugar.RECHAZADO)
     }
 
     override fun onCreateView(
@@ -39,5 +40,22 @@ class DenegadosModeradorFragment : Fragment() {
 
     companion object {
 
+    }
+
+    override fun onResume(){
+        super.onResume()
+        listaLugares.clear()
+        Firebase.firestore
+            .collection("lugares")
+            .whereEqualTo("estado","RECHAZADO")
+            .get()
+            .addOnSuccessListener {
+                for (doc in it){
+                    val lugar = doc.toObject(Lugar::class.java)
+                    lugar.key = doc.id
+                    listaLugares.add(lugar)
+                }
+                adapterLista.notifyDataSetChanged()
+            }
     }
 }

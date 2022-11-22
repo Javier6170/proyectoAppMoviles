@@ -14,25 +14,26 @@ import com.android.busimap.databinding.FragmentAceptadosModeradorBinding
 import com.android.busimap.databinding.FragmentListaLugaresModeradorBinding
 import com.android.busimap.modelo.EstadoLugar
 import com.android.busimap.modelo.Lugar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class AceptadosModeradorFragment : Fragment() {
 
 
     lateinit var binding: FragmentAceptadosModeradorBinding
-    lateinit var listaLugares: ArrayList<Lugar>
+    var listaLugares: ArrayList<Lugar> = ArrayList()
     lateinit var adapterLista: LugarAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        listaLugares = Lugares.listarPorEstado(EstadoLugar.ACEPTADO)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentAceptadosModeradorBinding.inflate(inflater, container, false)
         adapterLista = LugarAdapter(listaLugares)
         binding.listaLugaresAceptados.adapter = adapterLista
@@ -43,5 +44,22 @@ class AceptadosModeradorFragment : Fragment() {
 
     companion object {
 
+    }
+
+    override fun onResume(){
+        super.onResume()
+        listaLugares.clear()
+        Firebase.firestore
+            .collection("lugares")
+            .whereEqualTo("estado","ACEPTADO")
+            .get()
+            .addOnSuccessListener {
+                for (doc in it){
+                    val lugar = doc.toObject(Lugar::class.java)
+                    lugar.key = doc.id
+                    listaLugares.add(lugar)
+                }
+                adapterLista.notifyDataSetChanged()
+            }
     }
 }

@@ -21,7 +21,7 @@ import com.android.busimap.R
 class RegistroActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityRegistroBinding
-    private lateinit var db: BusimapDbHelper
+    //private lateinit var db: BusimapDbHelper
     lateinit var dialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class RegistroActivity : AppCompatActivity() {
         dialog = builder.create()
 
 
-        db = BusimapDbHelper(this)
+        //db = BusimapDbHelper(this)
 
         binding.btnRegistro.setOnClickListener { registrarse() }
 

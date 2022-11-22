@@ -13,6 +13,7 @@ import com.android.busimap.R
 import com.android.busimap.databinding.ActivityHomeModeradorBinding
 import com.android.busimap.fragmentos.*
 import com.android.busimap.modelo.Usuario
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -47,6 +48,23 @@ class HomeActivityModerador : AppCompatActivity() , NavigationView.OnNavigationI
         val encabezado = binding.navigationView.getHeaderView(0)
 
         if (user != null) {
+
+            Firebase.firestore.collection("usuarios")
+                .document(user!!.uid)
+                .get()
+                .addOnSuccessListener {
+                    val userF = it.toObject(Usuario::class.java)
+
+                    var imagen = userF!!.imagenUser
+
+                    if (imagen!="" || imagen == null){
+                        Glide.with(binding.root.context)
+                            .load(imagen)
+                            .into(encabezado.findViewById(R.id.imagenUser))
+
+                    }
+                }
+
             encabezado.findViewById<TextView>(R.id.txt_nombreUser).text = user.email
             Firebase.firestore
                 .collection("usuarios")
