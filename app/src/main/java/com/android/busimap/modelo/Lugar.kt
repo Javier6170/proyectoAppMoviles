@@ -138,7 +138,7 @@ class Lugar() {
 
         for (horario in horarios) {
             pos = horario.diaSemana.indexOf(DiaSemana.values()[dia - 1])
-            mensaje = if (pos != -1) {
+            mensaje = if (pos != -1 || pos==pos) {
                 if (horario.horaInicio > hora) {
                     "${
                         horario.diaSemana[pos].toString().lowercase()

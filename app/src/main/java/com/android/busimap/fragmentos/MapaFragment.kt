@@ -101,13 +101,14 @@ class MapaFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClick
 
         if (estado) {
             val categorias = Categorias
-
+/*
             categorias.listar().forEach {
                 Firebase.firestore.collection("categorias")
                     .add(it)
                     .addOnSuccessListener {  }
             }
 
+ */
 
 
             Firebase.firestore
